@@ -6,7 +6,7 @@ import json
 if hasattr(sys.stdout, 'reconfigure'):
     sys.stdout.reconfigure(encoding='utf-8')
 
-DATASET_PATH = r"c:\laptrinh credit card\RightCard_Database_MVP.csv"
+DATASET_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "RightCard_Database_MVP.csv")
 
 def validate_dataset():
     if not os.path.exists(DATASET_PATH):
