@@ -1,4 +1,4 @@
-﻿__pycache__/
+__pycache__/
 *.py[cod]
 
 .venv/
@@ -14,6 +14,10 @@ env/
 .idea/
 .vscode/
 
-*.log
-
 .DS_Store
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+frontend/.vite/
