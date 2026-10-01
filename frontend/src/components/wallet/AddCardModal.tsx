@@ -64,29 +64,29 @@ export const AddCardModal: React.FC<AddCardModalProps> = ({
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      title="Thêm thẻ vào ví của bạn"
-      subtitle="Chọn thẻ tín dụng bạn đang sở hữu để tối ưu hóa quyết định chi tiêu"
+      title="Thêm card vào ví"
+      subtitle="Chọn những chiếc card bạn đang có để Cardy gợi ý quẹt thẻ chuẩn hơn."
       maxWidth="2xl"
     >
       <div className="space-y-4">
         {/* Search */}
         <div className="relative">
-          <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+          <Search className="w-4 h-4 text-ink-3 absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Tìm theo tên thẻ hoặc ngân hàng (VD: VPBank, Shopee, Techcombank)..."
-            className="w-full text-xs pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-slate-900 focus:bg-white"
+            className="w-full text-xs pl-10 pr-4 py-2.5 rounded-xl border border-line bg-paper focus:outline-none focus:ring-2 focus:ring-blue-600 focus:bg-white"
           />
         </div>
 
         {/* Card list */}
         {loading ? (
-          <LoadingSpinner label="Đang tải danh mục thẻ..." fullHeight />
+          <LoadingSpinner label="Để Cardy tải danh sách card…" fullHeight />
         ) : filteredCards.length === 0 ? (
-          <div className="text-center py-8 text-xs text-slate-500">
-            Không tìm thấy thẻ nào khớp với từ khóa tìm kiếm.
+          <div className="text-center py-8 text-xs text-ink-3">
+            Không tìm thấy card nào phù hợp từ khóa này.
           </div>
         ) : (
           <div className="max-h-[50vh] overflow-y-auto space-y-2.5 pr-1">
@@ -97,7 +97,7 @@ export const AddCardModal: React.FC<AddCardModalProps> = ({
               return (
                 <div
                   key={card.card_id}
-                  className="flex items-center justify-between p-3.5 rounded-2xl border border-slate-200/80 bg-white hover:border-slate-300 transition-all gap-4"
+                  className="flex items-center justify-between p-3.5 rounded-2xl border border-line bg-white hover:border-blue-200 transition-all gap-4"
                 >
                   <div className="flex items-center gap-3">
                     <div className="hidden sm:block shrink-0">
@@ -112,17 +112,17 @@ export const AddCardModal: React.FC<AddCardModalProps> = ({
                     </div>
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="text-[10px] font-bold text-teal-700 bg-teal-50 px-1.5 py-0.5 rounded border border-teal-100">
+                        <span className="text-[10px] font-bold text-blue-700 bg-blue-50 px-1.5 py-0.5 rounded border border-blue-200">
                           {card.bank_id}
                         </span>
-                        <span className="text-[10px] text-slate-400">
+                        <span className="text-[10px] text-ink-3">
                           {card.network} • {card.card_tier || 'Classic'}
                         </span>
                       </div>
-                      <h4 className="text-xs font-bold text-slate-900 mt-0.5 line-clamp-1">
+                      <h4 className="text-xs font-display font-bold text-ink mt-0.5 line-clamp-1">
                         {card.name}
                       </h4>
-                      <p className="text-[11px] text-slate-500">
+                      <p className="text-[11px] text-ink-3">
                         Phí thường niên:{' '}
                         {card.annual_fee === 0 ? '0 ₫' : formatVND(card.annual_fee)}
                       </p>
@@ -131,7 +131,7 @@ export const AddCardModal: React.FC<AddCardModalProps> = ({
 
                   <div className="shrink-0">
                     {isOwned ? (
-                      <span className="inline-flex items-center gap-1 text-xs font-bold text-teal-700 bg-teal-50 px-3 py-1.5 rounded-xl border border-teal-200">
+                      <span className="inline-flex items-center gap-1 text-xs font-bold text-blue-700 bg-blue-50 px-3 py-1.5 rounded-xl border border-blue-200">
                         <Check className="w-3.5 h-3.5" />
                         <span>Đã có trong ví</span>
                       </span>
@@ -141,8 +141,9 @@ export const AddCardModal: React.FC<AddCardModalProps> = ({
                         loading={isAdding}
                         onClick={() => handleAdd(card.card_id)}
                         icon={<Plus className="w-3.5 h-3.5" />}
+                        className="bg-blue-600 text-white hover:bg-blue-700 font-bold"
                       >
-                        Thêm thẻ
+                        + Thêm vào ví
                       </Button>
                     )}
                   </div>

@@ -32,7 +32,7 @@ export function App() {
       setWalletCards(walletData);
       setAllCards(cardsData);
     } catch (err) {
-      console.error('Error loading initial RightCard data:', err);
+      console.error('Error loading initial Cardy data:', err);
     }
   };
 
@@ -69,7 +69,7 @@ export function App() {
       };
       setWalletCards((prev) => [...prev.filter((w) => w.card_id !== cardId), enriched]);
     } catch (err: any) {
-      alert(err.message || 'Không thể thêm thẻ vào ví.');
+      alert(err.message || 'Không thể thêm card vào ví.');
     } finally {
       setLoadingWalletCardId(null);
     }
@@ -81,7 +81,7 @@ export function App() {
       await removeCardFromWallet(cardId);
       setWalletCards((prev) => prev.filter((w) => w.card_id !== cardId));
     } catch (err: any) {
-      alert(err.message || 'Không thể gỡ thẻ khỏi ví.');
+      alert(err.message || 'Không thể gỡ card khỏi ví.');
     } finally {
       setLoadingWalletCardId(null);
     }
@@ -103,7 +103,7 @@ export function App() {
         return prev.filter((c) => c.card_id !== card.card_id);
       }
       if (prev.length >= 3) {
-        alert('Bạn chỉ có thể so sánh tối đa 3 thẻ cùng lúc.');
+        alert('Bạn chỉ có thể so sánh tối đa 3 card cùng lúc nhé.');
         return prev;
       }
       return [...prev, card];
@@ -115,7 +115,7 @@ export function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-800 antialiased selection:bg-teal-100 selection:text-teal-900">
+    <div className="min-h-screen flex flex-col bg-paper text-ink font-sans antialiased selection:bg-blue-100 selection:text-blue-900">
       {/* Top Navigation */}
       <Navbar
         currentTab={currentTab}

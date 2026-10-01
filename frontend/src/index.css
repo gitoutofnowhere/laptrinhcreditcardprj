@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    @apply bg-slate-50 text-slate-800 antialiased font-sans;
+    @apply bg-paper text-ink font-sans antialiased;
   }
 }
 
@@ -14,14 +14,14 @@
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: #f6f8fe;
 }
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: #c6d1ff;
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+  background: #9eadfb;
 }
 
 /* Card glass / depth subtle styles */
@@ -35,5 +35,5 @@
 
 .credit-card-preview:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 24px -10px rgba(15, 23, 42, 0.25);
+  box-shadow: 0 14px 32px rgba(67, 83, 224, 0.16);
 }

@@ -37,9 +37,9 @@ export const WalletPage: React.FC<WalletPageProps> = ({
   const tabs = [
     {
       id: 'optimize' as const,
-      label: 'Bản đồ quẹt thẻ tối ưu',
+      label: 'Đi đâu quẹt gì',
       icon: Sparkles,
-      desc: 'Phân bổ thẻ theo danh mục',
+      desc: 'Gợi ý quẹt thẻ theo danh mục',
     },
     {
       id: 'cards' as const,
@@ -49,13 +49,13 @@ export const WalletPage: React.FC<WalletPageProps> = ({
     },
     {
       id: 'simulate' as const,
-      label: 'Mô phỏng mở thêm thẻ',
+      label: 'So thử card mới',
       icon: TrendingUp,
-      desc: 'Đánh giá thẻ ứng viên',
+      desc: 'Đang phân vân thẻ mới?',
     },
     {
       id: 'spending' as const,
-      label: 'Hồ sơ chi tiêu',
+      label: 'Mức chi hàng tháng',
       icon: PieChart,
       desc: 'Ngân sách chi tiêu tháng',
     },
@@ -66,15 +66,15 @@ export const WalletPage: React.FC<WalletPageProps> = ({
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-50 text-teal-800 text-xs font-bold border border-teal-200 mb-2">
-            <Wallet className="w-3.5 h-3.5 text-teal-600" />
-            <span>Ví thông minh cá nhân</span>
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 text-blue-800 text-xs font-bold border border-blue-200 mb-2">
+            <Wallet className="w-3.5 h-3.5 text-blue-600" />
+            <span>Ví thẻ của bạn</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-            Ví thẻ & Bản đồ hoàn thưởng
+          <h1 className="text-2xl sm:text-3xl font-display font-extrabold text-ink tracking-tight">
+            Ví thẻ & Mẹo quẹt thông minh
           </h1>
-          <p className="text-xs text-slate-500 mt-0.5">
-            Quản lý thẻ sở hữu, nhận hướng dẫn quẹt thẻ tối ưu theo từng nhóm ngành và mô phỏng giá trị khi mở thẻ mới.
+          <p className="text-xs text-ink-3 mt-0.5">
+            Quản lý thẻ sở hữu, biết ngay quẹt thẻ nào khi chi tiêu để nhận tối đa hoàn tiền và so thử xem có nên mở thêm thẻ mới.
           </p>
         </div>
 
@@ -83,7 +83,7 @@ export const WalletPage: React.FC<WalletPageProps> = ({
             size="sm"
             onClick={() => setIsAddModalOpen(true)}
             icon={<Plus className="w-3.5 h-3.5" />}
-            className="bg-slate-900 text-white hover:bg-slate-800 font-bold"
+            className="bg-blue-600 text-white hover:bg-blue-700 font-bold"
           >
             Thêm thẻ vào ví
           </Button>
@@ -91,7 +91,7 @@ export const WalletPage: React.FC<WalletPageProps> = ({
       </div>
 
       {/* Wallet Tabs */}
-      <div className="border-b border-slate-200 overflow-x-auto pb-px">
+      <div className="border-b border-line overflow-x-auto pb-px">
         <div className="flex items-center gap-2 min-w-max">
           {tabs.map((tab) => {
             const Icon = tab.icon;
@@ -103,12 +103,12 @@ export const WalletPage: React.FC<WalletPageProps> = ({
                 onClick={() => setActiveTab(tab.id)}
                 className={`flex items-center gap-2 px-4 py-3 border-b-2 text-xs font-bold transition-all ${
                   isActive
-                    ? 'border-slate-900 text-slate-900'
-                    : 'border-transparent text-slate-500 hover:text-slate-800 hover:border-slate-300'
+                    ? 'border-blue-600 text-blue-600'
+                    : 'border-transparent text-ink-3 hover:text-ink hover:border-line'
                 }`}
               >
                 <Icon
-                  className={`w-4 h-4 ${isActive ? 'text-teal-600' : 'text-slate-400'}`}
+                  className={`w-4 h-4 ${isActive ? 'text-blue-600' : 'text-ink-3'}`}
                 />
                 <span>{tab.label}</span>
               </button>

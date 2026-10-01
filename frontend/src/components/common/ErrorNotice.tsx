@@ -1,37 +1,39 @@
 import React from 'react';
-import { AlertCircle, RefreshCw } from 'lucide-react';
+import { RefreshCw } from 'lucide-react';
 import { Button } from './Button';
+import { CardyMascot } from '../brand/Mascot';
 
-interface ErrorNoticeProps {
+export interface ErrorNoticeProps {
   title?: string;
-  message: string;
+  message?: string;
   onRetry?: () => void;
   className?: string;
 }
 
 export const ErrorNotice: React.FC<ErrorNoticeProps> = ({
-  title = 'Đã có lỗi xảy ra',
-  message,
+  title = 'Ối, chưa tải được.',
+  message = 'Kiểm tra kết nối rồi thử lại nhé.',
   onRetry,
   className = '',
 }) => {
   return (
     <div
-      className={`rounded-2xl border border-rose-200/80 bg-rose-50/50 p-5 text-rose-900 ${className}`}
+      className={`rounded-3xl border border-line bg-white p-6 text-navy-900 shadow-card ${className}`}
     >
-      <div className="flex items-start gap-3">
-        <AlertCircle className="w-5 h-5 text-rose-600 mt-0.5 shrink-0" />
+      <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 text-center sm:text-left">
+        <div className="shrink-0 -mt-2">
+          <CardyMascot pose="oops" size={80} />
+        </div>
         <div className="flex-1">
-          <h4 className="text-sm font-semibold text-rose-950">{title}</h4>
-          <p className="text-xs text-rose-800/90 mt-1 leading-relaxed">{message}</p>
+          <h4 className="text-base font-bold text-navy-900">{title}</h4>
+          <p className="text-xs text-ink-2 mt-1 leading-relaxed">{message}</p>
           {onRetry && (
-            <div className="mt-3">
+            <div className="mt-4">
               <Button
                 variant="outline"
                 size="sm"
                 onClick={onRetry}
                 icon={<RefreshCw className="w-3.5 h-3.5" />}
-                className="bg-white border-rose-200 text-rose-800 hover:bg-rose-50"
               >
                 Thử lại
               </Button>

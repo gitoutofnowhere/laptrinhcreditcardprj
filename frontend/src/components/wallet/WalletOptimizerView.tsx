@@ -49,7 +49,7 @@ export const WalletOptimizerView: React.FC<WalletOptimizerViewProps> = ({
   }, []);
 
   if (loading) {
-    return <LoadingSpinner label="Đang phân tích và tối ưu hóa ví của bạn..." fullHeight />;
+    return <LoadingSpinner label="Để Cardy xem ví của bạn…" fullHeight />;
   }
 
   if (error) {
@@ -62,18 +62,18 @@ export const WalletOptimizerView: React.FC<WalletOptimizerViewProps> = ({
 
   if (data.message && data.category_recommendations.length === 0) {
     return (
-      <div className="bg-white rounded-3xl border border-slate-200 p-8 text-center space-y-4">
-        <Zap className="w-10 h-10 text-teal-600 mx-auto" />
-        <h3 className="text-base font-bold text-slate-900">
-          Chưa đủ dữ liệu để chạy thuật toán tối ưu hóa
+      <div className="bg-white rounded-3xl border border-line p-8 text-center space-y-4 shadow-card">
+        <Zap className="w-10 h-10 text-blue-600 mx-auto" />
+        <h3 className="text-base font-display font-extrabold text-ink">
+          Cardy cần thêm chút thông tin chi tiêu để gợi ý
         </h3>
-        <p className="text-xs text-slate-500 max-w-md mx-auto leading-relaxed">
+        <p className="text-xs text-ink-3 max-w-md mx-auto leading-relaxed">
           {data.message}
         </p>
         <div className="flex items-center justify-center gap-3 pt-2">
           {onGoToSpending && (
             <Button size="sm" onClick={onGoToSpending}>
-              Cập nhật hồ sơ chi tiêu
+              Điền mức chi hàng tháng
             </Button>
           )}
           <Button variant="outline" size="sm" onClick={fetchOptimization} icon={<RefreshCw className="w-3.5 h-3.5" />}>
@@ -88,50 +88,50 @@ export const WalletOptimizerView: React.FC<WalletOptimizerViewProps> = ({
     <div className="space-y-6 animate-fadeIn">
       {/* Summary KPI Banner */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-3xl p-6 border border-slate-800 shadow-md">
-          <span className="text-xs font-semibold uppercase tracking-wider text-teal-300 block">
-            Lợi ích hoàn thưởng ước tính
+        <div className="bg-gradient-to-br from-ink to-blue-900 text-white rounded-3xl p-6 border border-ink-800 shadow-md">
+          <span className="text-xs font-semibold uppercase tracking-wider text-blue-200 block">
+            Ước tính hoàn tiền nhận được
           </span>
-          <div className="text-2xl sm:text-3xl font-black text-white mt-1">
+          <div className="text-2xl sm:text-3xl font-display font-extrabold text-white mt-1">
             {formatVND(data.total_annual_reward)}
             <span className="text-xs font-normal text-slate-300"> / năm</span>
           </div>
-          <p className="text-[11px] text-slate-400 mt-2">
-            Khi bạn sử dụng đúng thẻ được đề xuất cho từng khoản chi.
+          <p className="text-[11px] text-slate-300 mt-2">
+            Khi bạn quẹt đúng chiếc card được gợi ý cho từng khoản chi.
           </p>
         </div>
 
-        <div className="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-sm flex flex-col justify-between">
+        <div className="bg-white rounded-3xl p-6 border border-line shadow-card flex flex-col justify-between">
           <div>
-            <span className="text-xs font-semibold uppercase tracking-wider text-slate-400 block">
-              Tổng chi tiêu hàng tháng
+            <span className="text-xs font-semibold uppercase tracking-wider text-ink-3 block">
+              Mức chi hàng tháng của bạn
             </span>
-            <div className="text-2xl font-black text-slate-900 mt-1">
+            <div className="text-2xl font-display font-extrabold text-ink mt-1">
               {formatVND(data.total_monthly_spending)}
             </div>
           </div>
-          <p className="text-[11px] text-slate-500 mt-2">
-            Được cấu hình trong hồ sơ chi tiêu cá nhân của bạn.
+          <p className="text-[11px] text-ink-3 mt-2">
+            Được ước tính theo mức chi bạn đã điền.
           </p>
         </div>
 
-        <div className="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-sm flex flex-col justify-between">
+        <div className="bg-white rounded-3xl p-6 border border-line shadow-card flex flex-col justify-between">
           <div>
-            <span className="text-xs font-semibold uppercase tracking-wider text-slate-400 block">
-              Tình trạng bao phủ quyền lợi
+            <span className="text-xs font-semibold uppercase tracking-wider text-ink-3 block">
+              Độ phủ ưu đãi của ví
             </span>
             <div className="flex items-center gap-2 mt-1">
-              <span className="text-xl font-bold text-slate-900">
+              <span className="text-xl font-display font-bold text-ink">
                 {data.category_recommendations.length - data.weak_categories.length} /{' '}
                 {data.category_recommendations.length} nhóm
               </span>
               {data.weak_categories.length === 0 ? (
                 <span className="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">
-                  Tối ưu 100%
+                  Đủ thẻ cho mọi nhóm
                 </span>
               ) : (
                 <span className="text-[11px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200">
-                  Cần bổ sung {data.weak_categories.length} nhóm
+                  Thiếu ưu đãi ở {data.weak_categories.length} nhóm
                 </span>
               )}
             </div>
@@ -151,10 +151,10 @@ export const WalletOptimizerView: React.FC<WalletOptimizerViewProps> = ({
               <Button
                 size="sm"
                 onClick={onGoToSimulation}
-                icon={<Sparkles className="w-3.5 h-3.5 text-teal-400" />}
+                icon={<Sparkles className="w-3.5 h-3.5 text-blue-200" />}
                 className="text-xs"
               >
-                Mô phỏng thêm thẻ
+                So thử card mới
               </Button>
             )}
           </div>
@@ -162,37 +162,35 @@ export const WalletOptimizerView: React.FC<WalletOptimizerViewProps> = ({
       </div>
 
       {/* Category -> Card Mapping Guide */}
-      <div className="bg-white rounded-3xl border border-slate-200/90 shadow-sm p-6 sm:p-8">
-        <div className="mb-6 pb-4 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div className="bg-white rounded-3xl border border-line shadow-card p-6 sm:p-8">
+        <div className="mb-6 pb-4 border-b border-line flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
-            <h3 className="text-lg font-bold text-slate-900 tracking-tight flex items-center gap-2">
-              <CreditCard className="w-5 h-5 text-teal-600" />
-              <span>Bản đồ quẹt thẻ thông minh theo danh mục</span>
+            <h3 className="text-lg font-display font-extrabold text-ink tracking-tight flex items-center gap-2">
+              <CreditCard className="w-5 h-5 text-blue-600" />
+              <span>Đi đâu, quẹt card gì?</span>
             </h3>
-            <p className="text-xs text-slate-500 mt-0.5">
-              Để tối đa hóa quyền lợi, hãy dùng đúng chiếc thẻ tương ứng khi thanh toán:
+            <p className="text-xs text-ink-3 mt-0.5">
+              Chi tiêu nhóm nào, cứ rút chiếc card này ra quẹt:
             </p>
           </div>
         </div>
 
         <div className="space-y-3">
           {data.category_recommendations.map((rec) => {
-            const isWeak = data.weak_categories.some((w) => w.category === rec.category);
-
             return (
               <div
                 key={rec.category}
-                className="p-4 sm:p-5 rounded-2xl border border-slate-200/80 bg-slate-50/50 hover:bg-white hover:border-slate-300 transition-all flex flex-col md:flex-row md:items-center justify-between gap-4"
+                className="p-4 sm:p-5 rounded-2xl border border-line bg-paper hover:bg-white hover:border-blue-200 transition-all flex flex-col md:flex-row md:items-center justify-between gap-4"
               >
                 {/* Category & Spending */}
                 <div className="md:w-1/4">
-                  <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block">
-                    Danh mục
+                  <span className="text-xs font-bold uppercase tracking-wider text-ink-3 block">
+                    Khoản chi
                   </span>
-                  <span className="text-base font-extrabold text-slate-900 block mt-0.5">
+                  <span className="text-base font-display font-extrabold text-ink block mt-0.5">
                     {rec.category}
                   </span>
-                  <span className="text-xs text-slate-500 font-medium">
+                  <span className="text-xs text-ink-3 font-medium">
                     Chi {formatVND(rec.monthly_spending)} / tháng
                   </span>
                 </div>
@@ -203,17 +201,17 @@ export const WalletOptimizerView: React.FC<WalletOptimizerViewProps> = ({
 
                 {/* Recommended Card */}
                 <div className="md:w-1/3">
-                  <span className="text-xs font-bold uppercase tracking-wider text-teal-700 block">
-                    Nên quẹt thẻ
+                  <span className="text-xs font-bold uppercase tracking-wider text-blue-600 block">
+                    Quẹt card này
                   </span>
                   <button
                     onClick={() => onViewCardDetailById(rec.recommended_card_id)}
                     className="text-left group inline-block"
                   >
-                    <span className="text-sm font-bold text-slate-900 group-hover:text-teal-700 transition-colors block">
+                    <span className="text-sm font-bold text-ink group-hover:text-blue-600 transition-colors block">
                       {rec.recommended_card_name}
                     </span>
-                    <span className="text-[11px] text-slate-400 block line-clamp-1 mt-0.5">
+                    <span className="text-[11px] text-ink-3 block line-clamp-1 mt-0.5">
                       {rec.reason}
                     </span>
                   </button>
@@ -221,14 +219,14 @@ export const WalletOptimizerView: React.FC<WalletOptimizerViewProps> = ({
 
                 {/* Expected Return */}
                 <div className="md:text-right">
-                  <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block">
-                    Hoàn thưởng dự kiến
+                  <span className="text-xs font-bold uppercase tracking-wider text-ink-3 block">
+                    Hoàn tiền ước tính
                   </span>
-                  <span className="text-sm font-black text-emerald-600 block mt-0.5">
+                  <span className="text-sm font-extrabold text-emerald-600 block mt-0.5">
                     +{formatVND(rec.expected_annual_reward)}
-                    <span className="text-[10px] text-slate-400 font-normal"> / năm</span>
+                    <span className="text-[10px] text-ink-3 font-normal"> / năm</span>
                   </span>
-                  <span className="text-[10px] text-slate-400 block">
+                  <span className="text-[10px] text-ink-3 block">
                     (~{formatVND(rec.expected_monthly_reward)}/tháng)
                   </span>
                 </div>
@@ -246,12 +244,11 @@ export const WalletOptimizerView: React.FC<WalletOptimizerViewProps> = ({
               <AlertTriangle className="w-4 h-4" />
             </div>
             <div>
-              <h4 className="text-base font-bold text-amber-950">
-                Danh mục chi tiêu chưa có thẻ mạnh ({data.weak_categories.length} nhóm)
+              <h4 className="text-base font-display font-extrabold text-amber-950">
+                Mục chi tiêu chưa có ưu đãi tốt ({data.weak_categories.length} nhóm)
               </h4>
               <p className="text-xs text-amber-800/90 mt-0.5">
-                Các danh mục này bạn có chi tiêu đáng kể nhưng ví thẻ hiện tại chưa có chương trình
-                hoàn tiền hoặc tích điểm cao (&lt; 1%).
+                Các nhóm này bạn chi tiêu khá nhiều nhưng ví hiện tại chưa có card hoàn tiền hay tích điểm tốt (&lt; 1%).
               </p>
             </div>
           </div>
@@ -263,16 +260,16 @@ export const WalletOptimizerView: React.FC<WalletOptimizerViewProps> = ({
                 className="p-4 rounded-2xl bg-white border border-amber-200/70 shadow-sm"
               >
                 <div className="flex items-center justify-between">
-                  <span className="font-bold text-xs text-slate-900">{w.category}</span>
+                  <span className="font-bold text-xs text-ink">{w.category}</span>
                   <span className="text-[10px] font-semibold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200">
-                    Khoảng trống
+                    Chưa có card tốt
                   </span>
                 </div>
-                <div className="mt-2 text-xs text-slate-500">
+                <div className="mt-2 text-xs text-ink-3">
                   <span>Chi tiêu: </span>
-                  <span className="font-bold text-slate-800">{formatVND(w.monthly_amount)}/th</span>
+                  <span className="font-bold text-ink">{formatVND(w.monthly_amount)}/th</span>
                 </div>
-                <p className="text-[11px] text-slate-400 mt-1 italic">
+                <p className="text-[11px] text-ink-3 mt-1 italic">
                   {w.reason}
                 </p>
               </div>
@@ -282,7 +279,7 @@ export const WalletOptimizerView: React.FC<WalletOptimizerViewProps> = ({
           {onGoToSimulation && (
             <div className="mt-5 pt-4 border-t border-amber-200/60 flex items-center justify-between">
               <p className="text-xs text-amber-900 font-medium">
-                Khắc phục khoảng trống này bằng cách thử mở thêm một chiếc thẻ tối ưu.
+                Đang tính mở thêm thẻ? So thử xem card nào bù đúng chỗ thiếu này nhé.
               </p>
               <Button
                 size="sm"
@@ -290,7 +287,7 @@ export const WalletOptimizerView: React.FC<WalletOptimizerViewProps> = ({
                 icon={<ArrowRight className="w-3.5 h-3.5" />}
                 className="bg-amber-700 hover:bg-amber-800 text-white"
               >
-                Mô phỏng thẻ giải quyết khoảng trống
+                So thử card mới bù thiếu
               </Button>
             </div>
           )}

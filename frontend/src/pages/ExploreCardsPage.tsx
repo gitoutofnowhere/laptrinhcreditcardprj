@@ -5,7 +5,8 @@ import { getCategories } from '../api/merchants';
 import { CardItem } from '../components/cards/CardItem';
 import { LoadingSpinner } from '../components/common/LoadingSpinner';
 import { ErrorNotice } from '../components/common/ErrorNotice';
-import { formatVND, getBankFullName } from '../utils/formatters';
+import { EmptyState } from '../components/common/EmptyState';
+import { getBankFullName } from '../utils/formatters';
 import { Search, Filter, RotateCcw, Compass } from 'lucide-react';
 
 interface ExploreCardsPageProps {
@@ -103,6 +104,7 @@ export const ExploreCardsPage: React.FC<ExploreCardsPageProps> = ({
     { id: 'Visa', label: 'Visa' },
     { id: 'Mastercard', label: 'Mastercard' },
     { id: 'JCB', label: 'JCB' },
+    { id: 'Napas', label: 'Napas' },
   ];
 
   const tiers = [
@@ -119,36 +121,36 @@ export const ExploreCardsPage: React.FC<ExploreCardsPageProps> = ({
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-teal-50 text-teal-700 text-xs font-bold border border-teal-200 mb-2">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold border border-blue-200 mb-2">
             <Compass className="w-3.5 h-3.5" />
-            <span>Tra cứu & Lọc thông minh</span>
+            <span>Tra cứu & Lọc thẻ</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-            Khám phá 30+ dòng thẻ tín dụng hàng đầu
+          <h1 className="font-display text-2xl sm:text-3xl font-black text-navy-900 tracking-tight">
+            30+ chiếc card ngân hàng hàng đầu
           </h1>
-          <p className="text-xs text-slate-500 mt-0.5">
-            Dữ liệu quyền lợi, hạn mức, phí thường niên và điều kiện phát hành được cập nhật mới nhất.
+          <p className="text-xs text-ink-2 mt-0.5">
+            Biểu phí thường niên, quyền lợi hoàn tiền và điều kiện phát hành được cập nhật minh bạch.
           </p>
         </div>
 
-        <div className="text-xs text-slate-500 font-semibold bg-white px-3.5 py-2 rounded-xl border border-slate-200 shadow-sm self-start sm:self-auto">
+        <div className="text-xs text-ink-2 font-bold bg-white px-4 py-2 rounded-xl border border-line shadow-card self-start sm:self-auto">
           Đang hiển thị:{' '}
-          <strong className="text-slate-900">{filteredCards.length} dòng thẻ</strong>
+          <strong className="text-navy-900">{filteredCards.length} dòng thẻ</strong>
         </div>
       </div>
 
       {/* Filter Toolbar */}
-      <div className="bg-white rounded-3xl border border-slate-200/90 shadow-sm p-5 space-y-4">
+      <div className="bg-white rounded-3xl border border-line shadow-card p-5 space-y-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
           {/* Keyword Search */}
           <div className="relative lg:col-span-2">
-            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-ink-3 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Tìm theo tên thẻ, ngân hàng..."
-              className="w-full text-xs pl-10 pr-3 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-slate-900 focus:bg-white"
+              placeholder="Tìm theo tên card, ngân hàng..."
+              className="w-full text-xs pl-10 pr-3 py-2.5 rounded-xl border border-line bg-paper text-navy-900 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:bg-white font-medium"
             />
           </div>
 
@@ -157,7 +159,7 @@ export const ExploreCardsPage: React.FC<ExploreCardsPageProps> = ({
             <select
               value={selectedBank}
               onChange={(e) => setSelectedBank(e.target.value)}
-              className="w-full text-xs font-semibold text-slate-700 bg-slate-50 px-3 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900"
+              className="w-full text-xs font-bold text-navy-900 bg-paper px-3 py-2.5 rounded-xl border border-line focus:outline-none focus:ring-2 focus:ring-blue-600"
             >
               {banks.map((b) => (
                 <option key={b.id} value={b.id}>
@@ -172,7 +174,7 @@ export const ExploreCardsPage: React.FC<ExploreCardsPageProps> = ({
             <select
               value={selectedNetwork}
               onChange={(e) => setSelectedNetwork(e.target.value)}
-              className="w-full text-xs font-semibold text-slate-700 bg-slate-50 px-3 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900"
+              className="w-full text-xs font-bold text-navy-900 bg-paper px-3 py-2.5 rounded-xl border border-line focus:outline-none focus:ring-2 focus:ring-blue-600"
             >
               {networks.map((n) => (
                 <option key={n.id} value={n.id}>
@@ -187,7 +189,7 @@ export const ExploreCardsPage: React.FC<ExploreCardsPageProps> = ({
             <select
               value={selectedTier}
               onChange={(e) => setSelectedTier(e.target.value)}
-              className="w-full text-xs font-semibold text-slate-700 bg-slate-50 px-3 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900"
+              className="w-full text-xs font-bold text-navy-900 bg-paper px-3 py-2.5 rounded-xl border border-line focus:outline-none focus:ring-2 focus:ring-blue-600"
             >
               {tiers.map((t) => (
                 <option key={t.id} value={t.id}>
@@ -200,8 +202,8 @@ export const ExploreCardsPage: React.FC<ExploreCardsPageProps> = ({
 
         {/* Categories chips filter */}
         {categories.length > 0 && (
-          <div className="pt-2 border-t border-slate-100 flex flex-wrap items-center gap-1.5">
-            <span className="text-[11px] font-bold text-slate-400 mr-1 flex items-center gap-1">
+          <div className="pt-2 border-t border-line flex flex-wrap items-center gap-1.5">
+            <span className="text-[11px] font-bold text-ink-3 mr-1 flex items-center gap-1">
               <Filter className="w-3 h-3" />
               <span>Ngành hàng:</span>
             </span>
@@ -209,10 +211,10 @@ export const ExploreCardsPage: React.FC<ExploreCardsPageProps> = ({
             <button
               type="button"
               onClick={() => setSelectedCategory('')}
-              className={`text-xs px-2.5 py-1 rounded-lg font-medium transition-all ${
+              className={`text-xs px-3 py-1 rounded-lg font-bold transition-all ${
                 selectedCategory === ''
-                  ? 'bg-slate-900 text-white'
-                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                  ? 'bg-navy-900 text-white shadow-2xs'
+                  : 'bg-paper text-ink-2 hover:bg-blue-50/60'
               }`}
             >
               Tất cả
@@ -223,10 +225,10 @@ export const ExploreCardsPage: React.FC<ExploreCardsPageProps> = ({
                 key={cat}
                 type="button"
                 onClick={() => setSelectedCategory(selectedCategory === cat ? '' : cat)}
-                className={`text-xs px-2.5 py-1 rounded-lg font-medium transition-all ${
+                className={`text-xs px-3 py-1 rounded-lg font-bold transition-all ${
                   selectedCategory === cat
-                    ? 'bg-teal-700 text-white'
-                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                    ? 'bg-blue-600 text-white shadow-2xs'
+                    : 'bg-paper text-ink-2 hover:bg-blue-50/60'
                 }`}
               >
                 {cat}
@@ -237,10 +239,10 @@ export const ExploreCardsPage: React.FC<ExploreCardsPageProps> = ({
               <button
                 type="button"
                 onClick={resetFilters}
-                className="text-xs text-rose-600 hover:text-rose-800 ml-auto inline-flex items-center gap-1 font-semibold"
+                className="text-xs text-danger hover:text-red-700 ml-auto inline-flex items-center gap-1 font-bold"
               >
                 <RotateCcw className="w-3 h-3" />
-                <span>Đặt lại bộ lọc</span>
+                <span>Đổi tiêu chí</span>
               </button>
             )}
           </div>
@@ -251,20 +253,14 @@ export const ExploreCardsPage: React.FC<ExploreCardsPageProps> = ({
 
       {/* Cards Grid */}
       {loading ? (
-        <LoadingSpinner label="Đang tải danh sách thẻ..." fullHeight />
+        <LoadingSpinner label="Để Cardy xem danh sách thẻ…" fullHeight />
       ) : filteredCards.length === 0 ? (
-        <div className="text-center py-16 bg-white rounded-3xl border border-slate-200 p-8">
-          <h3 className="text-base font-bold text-slate-800">Không tìm thấy chiếc thẻ nào phù hợp</h3>
-          <p className="text-xs text-slate-500 mt-1 max-w-sm mx-auto">
-            Hãy thử nới lỏng các bộ lọc ngân hàng, hạng thẻ hoặc danh mục ưu đãi.
-          </p>
-          <button
-            onClick={resetFilters}
-            className="mt-4 text-xs font-bold text-teal-700 hover:underline"
-          >
-            Xem lại tất cả thẻ
-          </button>
-        </div>
+        <EmptyState
+          title="Chưa có card nào ở đây."
+          description="Thử đổi tiêu chí xem nhé. Nới lỏng bộ lọc ngân hàng hoặc danh mục để tìm thấy thẻ phù hợp."
+          actionLabel="Đổi tiêu chí"
+          onAction={resetFilters}
+        />
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {filteredCards.map((card) => (

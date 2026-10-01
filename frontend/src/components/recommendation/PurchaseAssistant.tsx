@@ -3,7 +3,7 @@ import { RecommendationRequest, RecommendationResponse } from '../../types/recom
 import { MerchantOut } from '../../types/merchant';
 import { getMerchants, getCategories } from '../../api/merchants';
 import { getRecommendation } from '../../api/recommendation';
-import { formatVND, getBankFullName } from '../../utils/formatters';
+import { formatVND } from '../../utils/formatters';
 import { RecommendationResultView } from './RecommendationResultView';
 import { Button } from '../common/Button';
 import { LoadingSpinner } from '../common/LoadingSpinner';
@@ -16,7 +16,6 @@ import {
   Wallet,
   Check,
   Zap,
-  Tag,
   ArrowRight,
 } from 'lucide-react';
 
@@ -95,7 +94,7 @@ export const PurchaseAssistant: React.FC<PurchaseAssistantProps> = ({
     } catch (err: any) {
       setError(
         err.message ||
-          'Không thể tìm thấy thẻ phù hợp. Hãy thử thay đổi bộ lọc hoặc kiểm tra lại ví của bạn.'
+          'Chưa tìm thấy card phù hợp. Hãy thử đổi tiêu chí hoặc xem lại các thẻ trong ví của bạn nhé.'
       );
     } finally {
       setSubmitting(false);
@@ -121,8 +120,8 @@ export const PurchaseAssistant: React.FC<PurchaseAssistantProps> = ({
     { id: 'points', label: 'Tích điểm', desc: 'Tích điểm đổi voucher & quà' },
     { id: 'discount', label: 'Giảm giá', desc: 'Trừ trực tiếp trên hóa đơn' },
     { id: 'travel', label: 'Du lịch', desc: 'Tích dặm bay, phòng chờ' },
-    { id: 'low_fee', label: 'Phí thường niên 0đ', desc: 'Miễn phí trọn đời' },
-    { id: 'merchant_benefits', label: 'Ưu đãi đối tác', desc: 'Giảm giá sâu theo thương hiệu' },
+    { id: 'low_fee', label: '0đ phí năm', desc: 'Miễn phí trọn đời' },
+    { id: 'merchant_benefits', label: 'Ưu đãi quán quen', desc: 'Giảm sâu theo thương hiệu' },
   ];
 
   const quickPresets = [
@@ -177,26 +176,26 @@ export const PurchaseAssistant: React.FC<PurchaseAssistantProps> = ({
   const otherMerchants = merchants.filter((m) => !popularMerchantIds.includes(m.merchant_id));
 
   return (
-    <div className="max-w-3xl mx-auto bg-white rounded-3xl border border-slate-200/90 shadow-sm p-6 sm:p-8 animate-fadeIn">
+    <div className="max-w-3xl mx-auto bg-white rounded-3xl border border-line shadow-card p-6 sm:p-8 animate-fadeIn">
       {/* Header */}
-      <div className="mb-6 pb-5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+      <div className="mb-6 pb-5 border-b border-line flex flex-col sm:flex-row sm:items-center justify-between gap-2">
         <div>
-          <span className="text-xs font-bold text-teal-600 uppercase tracking-wider flex items-center gap-1.5">
-            <Zap className="w-3.5 h-3.5" />
-            <span>Trợ lý quẹt thẻ tức thì</span>
+          <span className="text-xs font-bold text-blue-600 uppercase tracking-wider flex items-center gap-1.5">
+            <Zap className="w-3.5 h-3.5 text-sun" />
+            <span>Đi đâu, card gì?</span>
           </span>
-          <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight mt-0.5">
-            Tôi sắp thực hiện một giao dịch
+          <h2 className="font-display text-xl sm:text-2xl font-black text-navy-900 tracking-tight mt-1">
+            Tôi sắp mua sắm một món đồ
           </h2>
-          <p className="text-xs text-slate-500 mt-1">
-            Nhập nhanh nơi mua và số tiền để biết chiếc thẻ nào đem lại nhiều tiền hoàn nhất.
+          <p className="text-xs text-ink-2 mt-1">
+            Nhập nhanh nơi mua và số tiền để xem chiếc card nào có benefit tốt nhất ngay lúc này.
           </p>
         </div>
 
         {/* Wallet Scope Badge */}
         <div className="self-start sm:self-center">
-          <span className="text-[11px] font-semibold text-slate-500 bg-slate-100 px-3 py-1.5 rounded-xl border border-slate-200/60 inline-flex items-center gap-1.5">
-            <Wallet className="w-3.5 h-3.5 text-teal-600" />
+          <span className="text-[11px] font-bold text-ink-3 bg-paper px-3 py-1.5 rounded-xl border border-line inline-flex items-center gap-1.5">
+            <Wallet className="w-3.5 h-3.5 text-blue-600" />
             <span>Ví có {walletCardIds.size} thẻ</span>
           </span>
         </div>
@@ -205,9 +204,9 @@ export const PurchaseAssistant: React.FC<PurchaseAssistantProps> = ({
       {error && <ErrorNotice message={error} className="mb-6" />}
 
       {/* Quick Scenario Chips */}
-      <div className="mb-6 bg-slate-50/80 p-3.5 rounded-2xl border border-slate-100">
-        <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-2">
-          Kịch bản nhanh thường gặp:
+      <div className="mb-6 bg-paper p-4 rounded-2xl border border-line">
+        <span className="text-[11px] font-bold text-ink-3 uppercase tracking-wider block mb-2.5">
+          Gợi ý nhanh theo thói quen:
         </span>
         <div className="flex flex-wrap gap-2">
           {quickPresets.map((preset, idx) => (
@@ -220,7 +219,7 @@ export const PurchaseAssistant: React.FC<PurchaseAssistantProps> = ({
                 setAmount(preset.amount);
                 setPreference(preset.pref);
               }}
-              className="text-xs font-semibold px-3 py-1.5 rounded-xl bg-white border border-slate-200 hover:border-teal-500 hover:text-teal-700 transition-all text-slate-700 shadow-2xs hover:shadow-xs"
+              className="text-xs font-bold px-3 py-1.5 rounded-xl bg-white border border-line hover:border-blue-400 hover:text-blue-700 transition-all text-navy-900 shadow-2xs"
             >
               {preset.label}
             </button>
@@ -229,13 +228,13 @@ export const PurchaseAssistant: React.FC<PurchaseAssistantProps> = ({
       </div>
 
       {loadingOptions ? (
-        <LoadingSpinner label="Đang tải dữ liệu đối tác & danh mục..." />
+        <LoadingSpinner label="Để Cardy tải danh sách ưu đãi..." />
       ) : (
         <div className="space-y-6">
           {/* Section 1: Merchant & Category */}
           <div className="space-y-3">
-            <label className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
-              <Store className="w-4 h-4 text-teal-600" />
+            <label className="text-xs font-bold uppercase tracking-wider text-navy-900 flex items-center gap-1.5">
+              <Store className="w-4 h-4 text-blue-600" />
               <span>Nơi bạn mua sắm / Thương hiệu</span>
             </label>
 
@@ -244,10 +243,10 @@ export const PurchaseAssistant: React.FC<PurchaseAssistantProps> = ({
               <button
                 type="button"
                 onClick={() => handleSelectMerchant('OTHER')}
-                className={`text-xs px-3 py-2 rounded-xl font-bold border transition-all ${
+                className={`text-xs px-3.5 py-2 rounded-xl font-bold border transition-all ${
                   merchantId === 'OTHER'
-                    ? 'bg-slate-900 text-white border-slate-900 shadow-sm'
-                    : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+                    ? 'bg-navy-900 text-white border-navy-900 shadow-2xs'
+                    : 'bg-paper text-ink-2 border-line hover:bg-blue-50/50 hover:border-blue-300'
                 }`}
               >
                 Chung / Nơi khác
@@ -260,10 +259,10 @@ export const PurchaseAssistant: React.FC<PurchaseAssistantProps> = ({
                     key={m.merchant_id}
                     type="button"
                     onClick={() => handleSelectMerchant(m.merchant_id)}
-                    className={`text-xs px-3 py-2 rounded-xl font-bold border transition-all ${
+                    className={`text-xs px-3.5 py-2 rounded-xl font-bold border transition-all ${
                       isSelected
-                        ? 'bg-slate-900 text-white border-slate-900 shadow-sm'
-                        : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+                        ? 'bg-navy-900 text-white border-navy-900 shadow-2xs'
+                        : 'bg-paper text-ink-2 border-line hover:bg-blue-50/50 hover:border-blue-300'
                     }`}
                   >
                     {m.merchant_name}
@@ -275,11 +274,11 @@ export const PurchaseAssistant: React.FC<PurchaseAssistantProps> = ({
             {/* More merchants dropdown if needed */}
             {otherMerchants.length > 0 && (
               <div className="flex items-center gap-2 pt-1">
-                <span className="text-xs text-slate-400">Hoặc chọn thương hiệu khác:</span>
+                <span className="text-xs text-ink-3">Hoặc chọn thương hiệu khác:</span>
                 <select
                   value={merchantId}
                   onChange={(e) => handleSelectMerchant(e.target.value)}
-                  className="text-xs font-semibold text-slate-700 bg-white border border-slate-200 rounded-xl px-2.5 py-1.5 focus:outline-none focus:ring-2 focus:ring-slate-900"
+                  className="text-xs font-bold text-navy-900 bg-white border border-line rounded-xl px-2.5 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-600"
                 >
                   <option value="OTHER">-- Chọn từ danh sách --</option>
                   {otherMerchants.map((m) => (
@@ -293,8 +292,8 @@ export const PurchaseAssistant: React.FC<PurchaseAssistantProps> = ({
 
             {/* Category selection */}
             <div className="pt-2">
-              <label className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5 mb-2">
-                <ShoppingBag className="w-4 h-4 text-teal-600" />
+              <label className="text-xs font-bold uppercase tracking-wider text-navy-900 flex items-center gap-1.5 mb-2">
+                <ShoppingBag className="w-4 h-4 text-blue-600" />
                 <span>Danh mục giao dịch</span>
               </label>
               <div className="flex flex-wrap gap-2">
@@ -305,10 +304,10 @@ export const PurchaseAssistant: React.FC<PurchaseAssistantProps> = ({
                       key={cat}
                       type="button"
                       onClick={() => setCategory(cat)}
-                      className={`text-xs px-3 py-1.5 rounded-xl font-medium border transition-all ${
+                      className={`text-xs px-3.5 py-1.5 rounded-xl font-bold border transition-all ${
                         isSelected
-                          ? 'bg-teal-700 text-white border-teal-700 shadow-sm'
-                          : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
+                          ? 'bg-blue-600 text-white border-blue-600 shadow-2xs'
+                          : 'bg-white text-ink-2 border-line hover:border-blue-300 hover:bg-blue-50/50'
                       }`}
                     >
                       {cat}
@@ -321,8 +320,8 @@ export const PurchaseAssistant: React.FC<PurchaseAssistantProps> = ({
 
           {/* Section 2: Amount */}
           <div className="space-y-3 pt-2">
-            <label className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
-              <Coins className="w-4 h-4 text-teal-600" />
+            <label className="text-xs font-bold uppercase tracking-wider text-navy-900 flex items-center gap-1.5">
+              <Coins className="w-4 h-4 text-blue-600" />
               <span>Số tiền dự kiến thanh toán</span>
             </label>
 
@@ -334,9 +333,9 @@ export const PurchaseAssistant: React.FC<PurchaseAssistantProps> = ({
                 value={amount || ''}
                 onChange={(e) => setAmount(Number(e.target.value))}
                 placeholder="2000000"
-                className="w-full text-xl sm:text-2xl font-black text-slate-900 px-4 py-3.5 rounded-2xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-900 bg-slate-50"
+                className="w-full text-xl sm:text-2xl font-black text-navy-900 px-4 py-3.5 rounded-2xl border border-line focus:outline-none focus:ring-2 focus:ring-blue-600 bg-paper"
               />
-              <span className="absolute right-4 top-1/2 -translate-y-1/2 font-bold text-teal-700 text-sm">
+              <span className="absolute right-4 top-1/2 -translate-y-1/2 font-bold text-blue-700 text-sm">
                 {formatVND(amount)}
               </span>
             </div>
@@ -347,10 +346,10 @@ export const PurchaseAssistant: React.FC<PurchaseAssistantProps> = ({
                   key={q.val}
                   type="button"
                   onClick={() => setAmount(q.val)}
-                  className={`text-xs px-3 py-1 rounded-xl font-medium border transition-all ${
+                  className={`text-xs px-3 py-1 rounded-xl font-bold border transition-all ${
                     amount === q.val
-                      ? 'bg-slate-900 text-white border-slate-900'
-                      : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
+                      ? 'bg-navy-900 text-white border-navy-900 shadow-2xs'
+                      : 'bg-white text-ink-2 border-line hover:border-blue-300 hover:bg-blue-50/50'
                   }`}
                 >
                   {q.label}
@@ -361,8 +360,8 @@ export const PurchaseAssistant: React.FC<PurchaseAssistantProps> = ({
 
           {/* Section 3: Preference */}
           <div className="space-y-3 pt-2">
-            <label className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
-              <Sparkles className="w-4 h-4 text-teal-600" />
+            <label className="text-xs font-bold uppercase tracking-wider text-navy-900 flex items-center gap-1.5">
+              <Sparkles className="w-4 h-4 text-sun" />
               <span>Điều bạn ưu tiên nhất lúc này</span>
             </label>
 
@@ -376,19 +375,15 @@ export const PurchaseAssistant: React.FC<PurchaseAssistantProps> = ({
                     onClick={() => setPreference(opt.id)}
                     className={`p-3 rounded-2xl border text-left transition-all ${
                       isSelected
-                        ? 'border-slate-900 bg-slate-900 text-white shadow-sm'
-                        : 'border-slate-200 hover:border-slate-300 bg-slate-50/50 text-slate-700 hover:bg-slate-100'
+                        ? 'border-blue-600 bg-blue-50 text-navy-900 ring-2 ring-blue-600/20 shadow-2xs'
+                        : 'border-line hover:border-blue-300 bg-white text-ink-2 hover:bg-blue-50/30'
                     }`}
                   >
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold block">{opt.label}</span>
-                      {isSelected && <Check className="w-3.5 h-3.5 text-teal-400 shrink-0" />}
+                      <span className="text-xs font-bold text-navy-900 block">{opt.label}</span>
+                      {isSelected && <Check className="w-3.5 h-3.5 text-blue-600 stroke-[3] shrink-0" />}
                     </div>
-                    <span
-                      className={`text-[10px] block mt-0.5 truncate ${
-                        isSelected ? 'text-slate-300' : 'text-slate-400'
-                      }`}
-                    >
+                    <span className="text-[10px] block mt-0.5 truncate text-ink-3">
                       {opt.desc}
                     </span>
                   </button>
@@ -398,16 +393,16 @@ export const PurchaseAssistant: React.FC<PurchaseAssistantProps> = ({
           </div>
 
           {/* Section 4: Wallet Scope Toggle */}
-          <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 flex items-center justify-between gap-4">
+          <div className="p-4 rounded-2xl bg-paper border border-line flex items-center justify-between gap-4">
             <div className="space-y-0.5">
-              <span className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
-                <Wallet className="w-3.5 h-3.5 text-teal-600" />
-                <span>Chỉ chọn trong các thẻ tôi đang sở hữu</span>
+              <span className="text-xs font-bold text-navy-900 flex items-center gap-1.5">
+                <Wallet className="w-3.5 h-3.5 text-blue-600" />
+                <span>Chỉ chọn trong các card tôi đang có trong ví</span>
               </span>
-              <p className="text-[11px] text-slate-500">
+              <p className="text-[11px] text-ink-3">
                 {walletCardIds.size > 0
                   ? `Ví bạn hiện có ${walletCardIds.size} thẻ đang lưu`
-                  : 'Ví hiện chưa có thẻ (hãy tắt tùy chọn này nếu muốn tìm thẻ trên thị trường)'}
+                  : 'Ví hiện chưa có thẻ (hãy tắt tùy chọn này nếu muốn tìm trên 30+ thẻ thị trường)'}
               </p>
             </div>
 
@@ -415,7 +410,7 @@ export const PurchaseAssistant: React.FC<PurchaseAssistantProps> = ({
               type="button"
               onClick={() => setOnlyWallet(!onlyWallet)}
               className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
-                onlyWallet ? 'bg-teal-600' : 'bg-slate-300'
+                onlyWallet ? 'bg-blue-600' : 'bg-slate-300'
               }`}
             >
               <span
@@ -427,11 +422,11 @@ export const PurchaseAssistant: React.FC<PurchaseAssistantProps> = ({
           </div>
 
           {/* Action CTA */}
-          <div className="pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <span className="text-xs text-slate-500">
+          <div className="pt-4 border-t border-line flex flex-col sm:flex-row items-center justify-between gap-3">
+            <span className="text-xs text-ink-2 font-medium">
               Đang tính cho:{' '}
-              <strong className="text-slate-900">{formatVND(amount)}</strong> tại{' '}
-              <strong className="text-slate-900">
+              <strong className="text-navy-900">{formatVND(amount)}</strong> tại{' '}
+              <strong className="text-navy-900">
                 {merchants.find((m) => m.merchant_id === merchantId)?.merchant_name || category}
               </strong>
             </span>
@@ -440,10 +435,10 @@ export const PurchaseAssistant: React.FC<PurchaseAssistantProps> = ({
               size="lg"
               loading={submitting}
               onClick={handleRunRecommendation}
-              icon={<Sparkles className="w-4 h-4 text-teal-400" />}
-              className="w-full sm:w-auto bg-slate-900 hover:bg-slate-800 text-white font-bold"
+              icon={<ArrowRight className="w-4 h-4 text-white" />}
+              className="w-full sm:w-auto"
             >
-              Xem thẻ nên dùng ngay
+              Card đi →
             </Button>
           </div>
         </div>

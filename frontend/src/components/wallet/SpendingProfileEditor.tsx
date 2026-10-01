@@ -113,30 +113,30 @@ export const SpendingProfileEditor: React.FC<SpendingProfileEditorProps> = ({
   const total = items.reduce((acc, curr) => acc + (curr.monthly_amount || 0), 0);
 
   if (loading) {
-    return <LoadingSpinner label="Đang tải hồ sơ chi tiêu..." fullHeight />;
+    return <LoadingSpinner label="Để Cardy tải thông tin chi tiêu…" fullHeight />;
   }
 
   return (
-    <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 sm:p-8 animate-fadeIn">
+    <div className="bg-white rounded-3xl border border-line shadow-card p-6 sm:p-8 animate-fadeIn">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-100">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-line">
         <div>
           <div className="flex items-center gap-2">
-            <PieChart className="w-5 h-5 text-teal-600" />
-            <h3 className="text-lg font-bold text-slate-900 tracking-tight">
-              Hồ sơ chi tiêu hàng tháng
+            <PieChart className="w-5 h-5 text-blue-600" />
+            <h3 className="text-lg font-display font-extrabold text-ink tracking-tight">
+              Mức chi hàng tháng của bạn
             </h3>
           </div>
-          <p className="text-xs text-slate-500 mt-1">
-            Nhập ngân sách chi tiêu ước tính theo từng nhóm ngành để thuật toán tính toán thẻ tối ưu nhất.
+          <p className="text-xs text-ink-3 mt-1">
+            Điền khoản chi ước tính mỗi tháng để Cardy gợi ý chiếc card phù hợp nhất nhé.
           </p>
         </div>
 
-        <div className="bg-slate-50 px-4 py-2.5 rounded-2xl border border-slate-200/80 text-right shrink-0">
-          <span className="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">
-            Tổng chi tiêu hàng tháng
+        <div className="bg-paper px-4 py-2.5 rounded-2xl border border-line text-right shrink-0">
+          <span className="text-[10px] uppercase font-bold text-ink-3 block tracking-wider">
+            Tổng chi tiêu ước tính
           </span>
-          <span className="text-lg font-black text-slate-900">{formatVND(total)}</span>
+          <span className="text-lg font-display font-extrabold text-ink">{formatVND(total)}</span>
         </div>
       </div>
 
@@ -145,7 +145,7 @@ export const SpendingProfileEditor: React.FC<SpendingProfileEditorProps> = ({
       {savedSuccess && (
         <div className="my-4 p-3 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold flex items-center gap-2 animate-fadeIn">
           <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-          <span>Đã cập nhật hồ sơ chi tiêu thành công! Thuật toán tối ưu ví đã được đồng bộ.</span>
+          <span>Lưu rồi nhé! Ưu đãi ví của bạn đã được cập nhật.</span>
         </div>
       )}
 
@@ -154,17 +154,17 @@ export const SpendingProfileEditor: React.FC<SpendingProfileEditorProps> = ({
         {items.map((item, idx) => (
           <div
             key={idx}
-            className="flex flex-col sm:flex-row sm:items-center gap-3 p-3.5 rounded-2xl bg-slate-50 border border-slate-200/70"
+            className="flex flex-col sm:flex-row sm:items-center gap-3 p-3.5 rounded-2xl bg-paper border border-line"
           >
             {/* Category Selector */}
             <div className="sm:w-1/3">
-              <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">
-                Danh mục
+              <label className="text-[10px] font-bold text-ink-3 uppercase tracking-wider block mb-1">
+                Khoản chi
               </label>
               <select
                 value={item.category}
                 onChange={(e) => handleCategoryChange(idx, e.target.value)}
-                className="w-full text-xs font-bold text-slate-800 bg-white px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900"
+                className="w-full text-xs font-bold text-ink bg-white px-3 py-2 rounded-xl border border-line focus:outline-none focus:ring-2 focus:ring-blue-600"
               >
                 {allCategories.map((c) => (
                   <option key={c} value={c}>
@@ -176,7 +176,7 @@ export const SpendingProfileEditor: React.FC<SpendingProfileEditorProps> = ({
 
             {/* Amount input */}
             <div className="flex-1">
-              <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">
+              <label className="text-[10px] font-bold text-ink-3 uppercase tracking-wider block mb-1">
                 Số tiền chi / tháng
               </label>
               <div className="relative">
@@ -186,10 +186,10 @@ export const SpendingProfileEditor: React.FC<SpendingProfileEditorProps> = ({
                   step="500000"
                   value={item.monthly_amount || ''}
                   onChange={(e) => handleAmountChange(idx, Number(e.target.value))}
-                  className="w-full text-xs font-bold text-slate-900 bg-white px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900"
+                  className="w-full text-xs font-bold text-ink bg-white px-3 py-2 rounded-xl border border-line focus:outline-none focus:ring-2 focus:ring-blue-600"
                   placeholder="0"
                 />
-                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[11px] font-semibold text-slate-400 pointer-events-none">
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[11px] font-semibold text-ink-3 pointer-events-none">
                   {formatVND(item.monthly_amount)}
                 </span>
               </div>
@@ -200,8 +200,8 @@ export const SpendingProfileEditor: React.FC<SpendingProfileEditorProps> = ({
               <button
                 type="button"
                 onClick={() => handleRemoveItem(idx)}
-                className="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition-colors"
-                title="Xóa danh mục"
+                className="p-2 text-ink-3 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition-colors"
+                title="Xóa khoản chi"
               >
                 <Trash2 className="w-4 h-4" />
               </button>
@@ -211,14 +211,14 @@ export const SpendingProfileEditor: React.FC<SpendingProfileEditorProps> = ({
       </div>
 
       {/* Actions */}
-      <div className="mt-6 pt-5 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div className="mt-6 pt-5 border-t border-line flex flex-col sm:flex-row items-center justify-between gap-3">
         <Button
           variant="outline"
           size="sm"
           onClick={handleAddItem}
           icon={<Plus className="w-3.5 h-3.5" />}
         >
-          Thêm danh mục chi tiêu
+          + Thêm khoản chi
         </Button>
 
         <Button
@@ -226,8 +226,9 @@ export const SpendingProfileEditor: React.FC<SpendingProfileEditorProps> = ({
           loading={saving}
           onClick={handleSave}
           icon={<Save className="w-3.5 h-3.5" />}
+          className="bg-blue-600 text-white hover:bg-blue-700 font-bold"
         >
-          Lưu & Tối ưu hóa ví
+          Lưu mức chi
         </Button>
       </div>
     </div>

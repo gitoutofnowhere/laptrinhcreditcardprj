@@ -16,7 +16,7 @@ import {
   Store,
   Check,
   Shield,
-  HelpCircle,
+  ArrowRight,
 } from 'lucide-react';
 
 interface FindCardWizardProps {
@@ -93,7 +93,7 @@ export const FindCardWizard: React.FC<FindCardWizardProps> = ({
       const res = await getRecommendation(payload);
       setResult(res);
     } catch (err: any) {
-      setError(err.message || 'Không thể tìm thấy thẻ phù hợp với tiêu chí hiện tại.');
+      setError(err.message || 'Chưa tìm thấy card phù hợp với tiêu chí hiện tại. Thử đổi tiêu chí xem nhé.');
     } finally {
       setSubmitting(false);
     }
@@ -113,11 +113,11 @@ export const FindCardWizard: React.FC<FindCardWizardProps> = ({
   }
 
   const preferenceOptions = [
-    { id: 'cashback', label: 'Hoàn tiền tối đa', desc: 'Thích nhận tiền hoàn về tài khoản mỗi tháng' },
+    { id: 'cashback', label: 'Hoàn tiền', desc: 'Thích nhận tiền hoàn về tài khoản mỗi tháng' },
     { id: 'points', label: 'Tích điểm đổi quà', desc: 'Tích lũy điểm thưởng mua sắm và ăn uống' },
     { id: 'travel', label: 'Du lịch & Dặm bay', desc: 'Phòng chờ thương gia, dặm Lotusmiles' },
-    { id: 'low_fee', label: 'Phí thường niên 0đ', desc: 'Miễn phí thường niên trọn đời' },
-    { id: 'merchant_benefits', label: 'Ưu đãi thương hiệu', desc: 'Giảm giá sâu Shopee, Grab, Starbucks...' },
+    { id: 'low_fee', label: '0đ phí thường niên', desc: 'Miễn phí thường niên trọn đời' },
+    { id: 'merchant_benefits', label: 'Ưu đãi quán quen', desc: 'Giảm giá sâu Grab, Shopee, Starbucks...' },
   ];
 
   const incomePresets = [
@@ -129,19 +129,18 @@ export const FindCardWizard: React.FC<FindCardWizardProps> = ({
   ];
 
   return (
-    <div className="max-w-3xl mx-auto bg-white rounded-3xl border border-slate-200/90 shadow-sm p-6 sm:p-8 animate-fadeIn">
+    <div className="max-w-3xl mx-auto bg-white rounded-3xl border border-line shadow-card p-6 sm:p-8 animate-fadeIn">
       {/* Header */}
-      <div className="mb-6 pb-5 border-b border-slate-100">
-        <span className="text-xs font-bold text-indigo-600 uppercase tracking-wider flex items-center gap-1.5">
+      <div className="mb-6 pb-5 border-b border-line">
+        <span className="text-xs font-bold text-blue-600 uppercase tracking-wider flex items-center gap-1.5">
           <CreditCard className="w-3.5 h-3.5" />
-          <span>Tư vấn mở thẻ tín dụng mới</span>
+          <span>Tìm card mở mới</span>
         </span>
-        <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight mt-0.5">
-          Tôi muốn tìm một chiếc thẻ mới để mở
+        <h2 className="font-display text-xl sm:text-2xl font-black text-navy-900 tracking-tight mt-1">
+          Chọn chiếc card hợp với bạn nhất
         </h2>
-        <p className="text-xs text-slate-500 mt-1">
-          Sàng lọc điều kiện thu nhập, biểu phí thường niên và thói quen chi tiêu để gợi ý thẻ có tỷ
-          lệ duyệt cao và quyền lợi tương xứng.
+        <p className="text-xs text-ink-2 mt-1">
+          Kể Cardy nghe mức thu nhập và ưu đãi bạn thích, Cardy lọc nhanh các thẻ tốt nhất để bạn không phải chọn đại.
         </p>
       </div>
 
@@ -151,11 +150,11 @@ export const FindCardWizard: React.FC<FindCardWizardProps> = ({
         {/* Monthly Income Input */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
-              <BadgeDollarSign className="w-4 h-4 text-teal-600" />
+            <label className="text-xs font-bold uppercase tracking-wider text-navy-900 flex items-center gap-1.5">
+              <BadgeDollarSign className="w-4 h-4 text-blue-600" />
               <span>Thu nhập trung bình hàng tháng</span>
             </label>
-            <span className="text-xs text-slate-400">Dùng để xác định điều kiện phát hành</span>
+            <span className="text-xs text-ink-3">Chỉ dùng để gợi ý card.</span>
           </div>
 
           <div className="relative">
@@ -165,10 +164,10 @@ export const FindCardWizard: React.FC<FindCardWizardProps> = ({
               step="1000000"
               value={monthlyIncome || ''}
               onChange={(e) => setMonthlyIncome(Number(e.target.value))}
-              className="w-full text-xl sm:text-2xl font-black text-slate-900 px-4 py-3.5 rounded-2xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-900 bg-slate-50"
+              className="w-full text-xl sm:text-2xl font-black text-navy-900 px-4 py-3.5 rounded-2xl border border-line focus:outline-none focus:ring-2 focus:ring-blue-600 bg-paper"
               placeholder="20000000"
             />
-            <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-bold text-teal-700">
+            <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-bold text-blue-700">
               {formatVND(monthlyIncome)}
             </span>
           </div>
@@ -179,10 +178,10 @@ export const FindCardWizard: React.FC<FindCardWizardProps> = ({
                 key={p.val}
                 type="button"
                 onClick={() => setMonthlyIncome(p.val)}
-                className={`text-xs px-3 py-1.5 rounded-xl font-medium border transition-all ${
+                className={`text-xs px-3.5 py-1.5 rounded-xl font-bold border transition-all ${
                   monthlyIncome === p.val
-                    ? 'bg-slate-900 text-white border-slate-900'
-                    : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
+                    ? 'bg-navy-900 text-white border-navy-900 shadow-2xs'
+                    : 'bg-white text-ink-2 border-line hover:border-blue-300 hover:bg-blue-50/50'
                 }`}
               >
                 {p.label}
@@ -193,8 +192,8 @@ export const FindCardWizard: React.FC<FindCardWizardProps> = ({
 
         {/* Primary Benefit Preference */}
         <div className="space-y-2">
-          <label className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
-            <Sparkles className="w-4 h-4 text-teal-600" />
+          <label className="text-xs font-bold uppercase tracking-wider text-navy-900 flex items-center gap-1.5">
+            <Sparkles className="w-4 h-4 text-sun" />
             <span>Quyền lợi bạn ưu tiên nhất</span>
           </label>
 
@@ -208,19 +207,15 @@ export const FindCardWizard: React.FC<FindCardWizardProps> = ({
                   onClick={() => setPrimaryPreference(opt.id)}
                   className={`p-3.5 rounded-2xl border text-left transition-all ${
                     isSelected
-                      ? 'border-slate-900 bg-slate-900 text-white shadow-sm'
-                      : 'border-slate-200 hover:border-slate-300 bg-slate-50/40 text-slate-700 hover:bg-slate-100'
+                      ? 'border-blue-600 bg-blue-50 text-navy-900 ring-2 ring-blue-600/20 shadow-2xs'
+                      : 'border-line hover:border-blue-300 bg-white text-ink-2 hover:bg-blue-50/30'
                   }`}
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold">{opt.label}</span>
-                    {isSelected && <Check className="w-3.5 h-3.5 text-teal-400" />}
+                    <span className="text-xs font-bold text-navy-900">{opt.label}</span>
+                    {isSelected && <Check className="w-4 h-4 text-blue-600 stroke-[3]" />}
                   </div>
-                  <span
-                    className={`text-[11px] block mt-1 ${
-                      isSelected ? 'text-slate-300' : 'text-slate-400'
-                    }`}
-                  >
+                  <span className="text-[11px] block mt-1 text-ink-3">
                     {opt.desc}
                   </span>
                 </button>
@@ -231,9 +226,9 @@ export const FindCardWizard: React.FC<FindCardWizardProps> = ({
 
         {/* Categories Multi-select */}
         <div className="space-y-2">
-          <label className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
-            <ShoppingBag className="w-4 h-4 text-teal-600" />
-            <span>Danh mục thường xuyên chi tiêu (chọn một hoặc nhiều)</span>
+          <label className="text-xs font-bold uppercase tracking-wider text-navy-900 flex items-center gap-1.5">
+            <ShoppingBag className="w-4 h-4 text-blue-600" />
+            <span>Bạn hay chi tiêu vào đâu nhất? (Chọn một hoặc nhiều)</span>
           </label>
 
           {loadingOptions ? (
@@ -247,14 +242,14 @@ export const FindCardWizard: React.FC<FindCardWizardProps> = ({
                     key={cat}
                     type="button"
                     onClick={() => toggleCategory(cat)}
-                    className={`text-xs px-3 py-1.5 rounded-xl font-medium border transition-all flex items-center gap-1.5 ${
+                    className={`text-xs px-3.5 py-1.5 rounded-xl font-bold border transition-all flex items-center gap-1.5 ${
                       isSelected
-                        ? 'bg-teal-700 text-white border-teal-700 shadow-2xs'
-                        : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
+                        ? 'bg-blue-600 text-white border-blue-600 shadow-2xs'
+                        : 'bg-white text-ink-2 border-line hover:border-blue-300 hover:bg-blue-50/50'
                     }`}
                   >
                     <span>{cat}</span>
-                    {isSelected && <Check className="w-3 h-3 text-teal-200" />}
+                    {isSelected && <Check className="w-3.5 h-3.5 text-white stroke-[3]" />}
                   </button>
                 );
               })}
@@ -264,8 +259,8 @@ export const FindCardWizard: React.FC<FindCardWizardProps> = ({
 
         {/* Favorite Merchants */}
         <div className="space-y-2">
-          <label className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
-            <Store className="w-4 h-4 text-teal-600" />
+          <label className="text-xs font-bold uppercase tracking-wider text-navy-900 flex items-center gap-1.5">
+            <Store className="w-4 h-4 text-blue-600" />
             <span>Thương hiệu yêu thích của bạn (tùy chọn)</span>
           </label>
 
@@ -277,14 +272,14 @@ export const FindCardWizard: React.FC<FindCardWizardProps> = ({
                   key={m.merchant_id}
                   type="button"
                   onClick={() => toggleMerchant(m.merchant_id)}
-                  className={`text-xs px-3 py-1.5 rounded-xl font-medium border transition-all flex items-center gap-1.5 ${
+                  className={`text-xs px-3 py-1.5 rounded-xl font-bold border transition-all flex items-center gap-1.5 ${
                     isSelected
-                      ? 'bg-slate-900 text-white border-slate-900'
-                      : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
+                      ? 'bg-navy-900 text-white border-navy-900'
+                      : 'bg-white text-ink-2 border-line hover:border-blue-300 hover:bg-blue-50/50'
                   }`}
                 >
                   <span>{m.merchant_name}</span>
-                  {isSelected && <Check className="w-3 h-3 text-teal-300" />}
+                  {isSelected && <Check className="w-3 h-3 text-sun stroke-[3]" />}
                 </button>
               );
             })}
@@ -293,8 +288,8 @@ export const FindCardWizard: React.FC<FindCardWizardProps> = ({
 
         {/* Annual Fee Limit */}
         <div className="space-y-2">
-          <label className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
-            <Shield className="w-4 h-4 text-teal-600" />
+          <label className="text-xs font-bold uppercase tracking-wider text-navy-900 flex items-center gap-1.5">
+            <Shield className="w-4 h-4 text-blue-600" />
             <span>Giới hạn phí thường niên chấp nhận</span>
           </label>
 
@@ -309,10 +304,10 @@ export const FindCardWizard: React.FC<FindCardWizardProps> = ({
                 key={idx}
                 type="button"
                 onClick={() => setMaxAnnualFee(f.val)}
-                className={`text-xs p-2.5 rounded-xl font-semibold border text-center transition-all ${
+                className={`text-xs p-2.5 rounded-xl font-bold border text-center transition-all ${
                   maxAnnualFee === f.val
-                    ? 'bg-slate-900 text-white border-slate-900 shadow-sm'
-                    : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
+                    ? 'bg-navy-900 text-white border-navy-900 shadow-2xs'
+                    : 'bg-white text-ink-2 border-line hover:border-blue-300 hover:bg-blue-50/50'
                 }`}
               >
                 {f.label}
@@ -323,15 +318,15 @@ export const FindCardWizard: React.FC<FindCardWizardProps> = ({
       </div>
 
       {/* Submit Button */}
-      <div className="mt-8 pt-5 border-t border-slate-100 flex justify-end">
+      <div className="mt-8 pt-5 border-t border-line flex justify-end">
         <Button
           size="lg"
           loading={submitting}
           onClick={handleRun}
-          icon={<Sparkles className="w-4 h-4 text-teal-400" />}
-          className="w-full sm:w-auto bg-slate-900 hover:bg-slate-800 text-white font-bold"
+          icon={<ArrowRight className="w-4 h-4 text-white" />}
+          className="w-full sm:w-auto"
         >
-          Tìm thẻ phù hợp với tôi
+          Tìm card hợp với bạn
         </Button>
       </div>
     </div>

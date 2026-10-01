@@ -1,8 +1,8 @@
 import React from 'react';
 
-interface BadgeProps {
+export interface BadgeProps {
   children: React.ReactNode;
-  variant?: 'slate' | 'brand' | 'amber' | 'emerald' | 'rose' | 'outline';
+  variant?: 'blue' | 'navy' | 'amber' | 'emerald' | 'rose' | 'outline' | 'slate' | 'brand';
   size?: 'sm' | 'md';
   className?: string;
   icon?: React.ReactNode;
@@ -10,23 +10,25 @@ interface BadgeProps {
 
 export const Badge: React.FC<BadgeProps> = ({
   children,
-  variant = 'slate',
+  variant = 'blue',
   size = 'md',
   className = '',
   icon,
 }) => {
   const sizes = {
-    sm: 'text-[11px] px-2 py-0.5 gap-1 font-medium',
-    md: 'text-xs px-2.5 py-1 gap-1.5 font-medium',
+    sm: 'text-[11px] px-2 py-0.5 gap-1 font-bold',
+    md: 'text-xs px-2.5 py-1 gap-1.5 font-bold',
   };
 
   const variants = {
-    slate: 'bg-slate-100 text-slate-700 border border-slate-200/80',
-    brand: 'bg-brand-50 text-brand-700 border border-brand-200/70',
-    amber: 'bg-amber-50 text-amber-800 border border-amber-200/80',
-    emerald: 'bg-emerald-50 text-emerald-800 border border-emerald-200/80',
-    rose: 'bg-rose-50 text-rose-700 border border-rose-200/80',
-    outline: 'bg-white text-slate-600 border border-slate-200',
+    blue: 'bg-blue-50 text-blue-700 border border-blue-200',
+    brand: 'bg-blue-50 text-blue-700 border border-blue-200',
+    navy: 'bg-navy-900 text-white border border-navy-950',
+    slate: 'bg-paper text-ink-2 border border-line',
+    amber: 'bg-[#fff1cc] text-[#9a5f00] border border-[#ffc93c]/50',
+    emerald: 'bg-[#dcf5ea] text-[#0f5e41] border border-[#2fbf8f]/40',
+    rose: 'bg-danger/10 text-danger border border-danger/20',
+    outline: 'bg-white text-ink-2 border border-line',
   };
 
   return (

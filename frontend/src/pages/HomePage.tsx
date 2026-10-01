@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from '../components/common/Button';
 import { NavTab } from '../components/common/Navbar';
+import { CardyMascot } from '../components/brand/Mascot';
 import {
   Sparkles,
   ShoppingBag,
@@ -9,9 +10,7 @@ import {
   TrendingUp,
   Compass,
   ArrowRight,
-  ShieldCheck,
   CheckCircle2,
-  Zap,
 } from 'lucide-react';
 
 interface HomePageProps {
@@ -23,62 +22,70 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, walletCount }) =
   return (
     <div className="space-y-16 py-6 sm:py-10 animate-fadeIn">
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 text-white rounded-3xl p-8 sm:p-14 border border-slate-800 shadow-2xl">
+      <section className="relative overflow-hidden bg-navy-900 text-white rounded-3xl p-8 sm:p-12 md:p-16 border border-navy-950 shadow-lift">
         {/* Subtle background glow */}
-        <div className="absolute top-0 right-1/4 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 right-0 w-80 h-80 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-blue-600/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 right-0 w-80 h-80 bg-sun/10 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="relative z-10 max-w-3xl space-y-6">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-teal-500/10 text-teal-300 text-xs font-bold border border-teal-500/20 backdrop-blur-sm">
-            <Sparkles className="w-3.5 h-3.5 text-teal-400" />
-            <span>Trợ lý cố vấn thẻ tín dụng theo ngữ cảnh thực tế</span>
+        <div className="relative z-10 grid grid-cols-1 md:grid-cols-[1.3fr_1fr] items-center gap-8">
+          <div className="space-y-6">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-500/20 text-blue-200 text-xs font-bold border border-blue-400/30 backdrop-blur-sm">
+              <Sparkles className="w-3.5 h-3.5 text-sun" />
+              <span>Không biết chọn card nào? Cardy xem chooo</span>
+            </div>
+
+            <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.05] tracking-[-0.03em] text-white">
+              Thanh toán card đi? <br />
+              <span className="text-sun">Để Cardy!</span>
+            </h1>
+
+            <p className="text-sm sm:text-base text-blue-100 leading-relaxed max-w-xl">
+              Thẻ tốt chưa chắc là thẻ hợp với bạn. Kể Cardy nghe bạn hay tiêu vào đâu, Cardy gợi ý
+              vài chiếc card có benefit đúng chỗ bạn cần. Đừng chọn card đại!
+            </p>
+
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
+              <Button
+                size="lg"
+                onClick={() => onNavigate('recommend')}
+                icon={<ArrowRight className="w-4 h-4 text-white" />}
+                className="font-bold text-base"
+              >
+                Tìm card hợp với bạn
+              </Button>
+
+              <Button
+                variant="outline"
+                size="lg"
+                onClick={() => onNavigate('explore')}
+                icon={<Compass className="w-4 h-4 text-blue-200" />}
+                className="bg-white/10 text-white border-white/20 hover:bg-white/20 font-bold"
+              >
+                Xem danh sách thẻ
+              </Button>
+            </div>
+
+            <div className="pt-6 flex flex-wrap items-center gap-6 text-xs text-blue-200/80 border-t border-white/15">
+              <div className="flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 text-sun" />
+                <span>30+ thẻ ngân hàng VN</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 text-sun" />
+                <span>Quyền lợi tính bằng tiền thật (VND)</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 text-sun" />
+                <span>Trung lập, không thiên vị</span>
+              </div>
+            </div>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.1] text-white">
-            Nên quẹt thẻ nào hôm nay?
-          </h1>
-
-          <p className="text-sm sm:text-base text-slate-300 leading-relaxed max-w-2xl">
-            Không có chiếc thẻ nào là tốt nhất cho tất cả mọi người. RightCard đối chiếu chính xác{' '}
-            <strong className="text-white">bạn đang mua gì</strong>,{' '}
-            <strong className="text-teal-400">bạn ưu tiên điều gì</strong>, và{' '}
-            <strong className="text-amber-300">chiếc thẻ nào trong ví</strong> đem lại nhiều tiền
-            hoàn nhất ngay tại thời điểm thanh toán.
-          </p>
-
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
-            <Button
-              size="lg"
-              onClick={() => onNavigate('recommend')}
-              icon={<Sparkles className="w-4 h-4 text-slate-950" />}
-              className="bg-teal-400 hover:bg-teal-300 text-slate-950 font-black shadow-lg shadow-teal-500/20"
-            >
-              Gợi ý thẻ cho khoản chi của tôi
-            </Button>
-
-            <Button
-              variant="outline"
-              size="lg"
-              onClick={() => onNavigate('explore')}
-              icon={<Compass className="w-4 h-4 text-slate-300" />}
-              className="bg-white/10 text-white border-white/20 hover:bg-white/20 font-bold"
-            >
-              Khám phá 30+ thẻ tín dụng
-            </Button>
-          </div>
-
-          <div className="pt-4 flex flex-wrap items-center gap-6 text-xs text-slate-400 border-t border-slate-800/80">
-            <div className="flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4 text-teal-400" />
-              <span>Dữ liệu 30+ thẻ ngân hàng VN</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4 text-teal-400" />
-              <span>Tính toán số tiền nhận lại thật (VND)</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4 text-teal-400" />
-              <span>Trung lập 100%, không thiên vị</span>
+          {/* Hero Mascot Character */}
+          <div className="hidden md:flex justify-center items-center">
+            <div className="relative">
+              <div className="absolute inset-0 bg-blue-500/20 rounded-full blur-2xl transform scale-90 pointer-events-none" />
+              <CardyMascot pose="hello" size={260} className="relative z-10" />
             </div>
           </div>
         </div>
@@ -87,11 +94,11 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, walletCount }) =
       {/* 4 Core Scenarios Navigation */}
       <section className="space-y-6">
         <div className="text-center max-w-xl mx-auto space-y-1.5">
-          <h2 className="text-2xl font-black text-slate-900 tracking-tight">
-            Bạn muốn giải quyết vấn đề gì?
+          <h2 className="font-display text-2xl sm:text-3xl font-black text-navy-900 tracking-tight">
+            Đi đâu, card gì? Cardy lo.
           </h2>
-          <p className="text-xs text-slate-500">
-            Chọn nhu cầu thực tế của bạn để RightCard hỗ trợ ra quyết định tài chính chuẩn xác:
+          <p className="text-xs text-ink-2">
+            Chọn tình huống thực tế của bạn để Cardy chỉ ngay chiếc card ngon nhất:
           </p>
         </div>
 
@@ -99,146 +106,144 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, walletCount }) =
           {/* Card 1: Purchase Recommendation */}
           <div
             onClick={() => onNavigate('recommend')}
-            className="group bg-white p-6 rounded-3xl border border-slate-200/90 shadow-sm hover:shadow-md hover:border-teal-300 transition-all cursor-pointer flex flex-col justify-between"
+            className="group bg-white p-6 rounded-3xl border border-line shadow-card hover:shadow-lift hover:border-blue-400 transition-all cursor-pointer flex flex-col justify-between"
           >
             <div className="space-y-3">
-              <div className="w-12 h-12 rounded-2xl bg-teal-50 flex items-center justify-center text-teal-700 group-hover:scale-110 transition-transform">
+              <div className="w-12 h-12 rounded-2xl bg-blue-50 flex items-center justify-center text-blue-600 group-hover:scale-110 transition-transform">
                 <ShoppingBag className="w-6 h-6" />
               </div>
-              <span className="text-[10px] font-bold uppercase tracking-wider text-teal-600 block">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-blue-600 block">
                 Chuẩn bị thanh toán
               </span>
-              <h3 className="text-base font-bold text-slate-900 group-hover:text-teal-700 transition-colors">
-                Tôi sắp mua sắm một món hàng
+              <h3 className="text-base font-bold text-navy-900 group-hover:text-blue-600 transition-colors">
+                Tôi sắp mua sắm một món đồ
               </h3>
-              <p className="text-xs text-slate-500 leading-relaxed">
-                Nhập số tiền và nơi mua sắm (Shopee, Grab, vé máy bay...) để biết quẹt thẻ nào được
-                hoàn nhiều tiền nhất.
+              <p className="text-xs text-ink-2 leading-relaxed">
+                Nhập số tiền và nơi mua sắm (Shopee, Grab, Starbucks...) để xem card nào có benefit ở đây.
               </p>
             </div>
 
-            <div className="mt-5 pt-3 border-t border-slate-100 flex items-center text-xs font-bold text-teal-700 group-hover:translate-x-1 transition-transform">
-              <span>Gợi ý thẻ quẹt ngay</span>
-              <ArrowRight className="w-3.5 h-3.5 ml-1" />
+            <div className="mt-5 pt-3 border-t border-line flex items-center text-xs font-bold text-blue-700 group-hover:translate-x-1 transition-transform">
+              <span>Card đi →</span>
             </div>
           </div>
 
           {/* Card 2: Find Card to Open */}
           <div
             onClick={() => onNavigate('recommend')}
-            className="group bg-white p-6 rounded-3xl border border-slate-200/90 shadow-sm hover:shadow-md hover:border-indigo-300 transition-all cursor-pointer flex flex-col justify-between"
+            className="group bg-white p-6 rounded-3xl border border-line shadow-card hover:shadow-lift hover:border-blue-400 transition-all cursor-pointer flex flex-col justify-between"
           >
             <div className="space-y-3">
               <div className="w-12 h-12 rounded-2xl bg-indigo-50 flex items-center justify-center text-indigo-700 group-hover:scale-110 transition-transform">
                 <CreditCard className="w-6 h-6" />
               </div>
               <span className="text-[10px] font-bold uppercase tracking-wider text-indigo-600 block">
-                Mở thẻ mới
+                Tìm card mở mới
               </span>
-              <h3 className="text-base font-bold text-slate-900 group-hover:text-indigo-700 transition-colors">
+              <h3 className="text-base font-bold text-navy-900 group-hover:text-blue-600 transition-colors">
                 Tôi muốn tìm thẻ mới để mở
               </h3>
-              <p className="text-xs text-slate-500 leading-relaxed">
-                Sàng lọc theo thu nhập, mức phí thường niên và sở thích hoàn tiền, tích dặm bay hoặc
-                giảm giá trực tiếp.
+              <p className="text-xs text-ink-2 leading-relaxed">
+                Sàng lọc theo thu nhập, phí thường niên và sở thích hoàn tiền, tích dặm bay hay ưu đãi quán quen.
               </p>
             </div>
 
-            <div className="mt-5 pt-3 border-t border-slate-100 flex items-center text-xs font-bold text-indigo-700 group-hover:translate-x-1 transition-transform">
-              <span>Tìm thẻ phù hợp</span>
-              <ArrowRight className="w-3.5 h-3.5 ml-1" />
+            <div className="mt-5 pt-3 border-t border-line flex items-center text-xs font-bold text-blue-700 group-hover:translate-x-1 transition-transform">
+              <span>Tìm card hợp gu →</span>
             </div>
           </div>
 
           {/* Card 3: Wallet Optimization */}
           <div
             onClick={() => onNavigate('wallet')}
-            className="group bg-white p-6 rounded-3xl border border-slate-200/90 shadow-sm hover:shadow-md hover:border-emerald-300 transition-all cursor-pointer flex flex-col justify-between"
+            className="group bg-white p-6 rounded-3xl border border-line shadow-card hover:shadow-lift hover:border-blue-400 transition-all cursor-pointer flex flex-col justify-between"
           >
             <div className="space-y-3">
               <div className="w-12 h-12 rounded-2xl bg-emerald-50 flex items-center justify-center text-emerald-700 group-hover:scale-110 transition-transform">
                 <Wallet className="w-6 h-6" />
               </div>
-              <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-600 block">
-                Ví cá nhân ({walletCount} thẻ)
+              <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-700 block">
+                Ví của bạn ({walletCount} thẻ)
               </span>
-              <h3 className="text-base font-bold text-slate-900 group-hover:text-emerald-700 transition-colors">
-                Bản đồ quẹt thẻ thông minh
+              <h3 className="text-base font-bold text-navy-900 group-hover:text-blue-600 transition-colors">
+                Đi đâu, card gì?
               </h3>
-              <p className="text-xs text-slate-500 leading-relaxed">
-                Tối ưu hóa thẻ nào nên quẹt cho từng nhóm ngành và phát hiện ngay những danh mục chưa
-                có thẻ mạnh.
+              <p className="text-xs text-ink-2 leading-relaxed">
+                Xem thẻ nào nên quẹt cho từng nhóm ngành và phát hiện ngay những danh mục chưa có thẻ mạnh.
               </p>
             </div>
 
-            <div className="mt-5 pt-3 border-t border-slate-100 flex items-center text-xs font-bold text-emerald-700 group-hover:translate-x-1 transition-transform">
-              <span>Xem ví của tôi</span>
-              <ArrowRight className="w-3.5 h-3.5 ml-1" />
+            <div className="mt-5 pt-3 border-t border-line flex items-center text-xs font-bold text-blue-700 group-hover:translate-x-1 transition-transform">
+              <span>Xem ví của bạn →</span>
             </div>
           </div>
 
           {/* Card 4: What-If Simulation */}
           <div
             onClick={() => onNavigate('wallet')}
-            className="group bg-white p-6 rounded-3xl border border-slate-200/90 shadow-sm hover:shadow-md hover:border-amber-300 transition-all cursor-pointer flex flex-col justify-between"
+            className="group bg-white p-6 rounded-3xl border border-line shadow-card hover:shadow-lift hover:border-blue-400 transition-all cursor-pointer flex flex-col justify-between"
           >
             <div className="space-y-3">
               <div className="w-12 h-12 rounded-2xl bg-amber-50 flex items-center justify-center text-amber-700 group-hover:scale-110 transition-transform">
                 <TrendingUp className="w-6 h-6" />
               </div>
-              <span className="text-[10px] font-bold uppercase tracking-wider text-amber-600 block">
-                Mô phỏng ví What-If
+              <span className="text-[10px] font-bold uppercase tracking-wider text-amber-700 block">
+                So thử card mới
               </span>
-              <h3 className="text-base font-bold text-slate-900 group-hover:text-amber-700 transition-colors">
+              <h3 className="text-base font-bold text-navy-900 group-hover:text-blue-600 transition-colors">
                 Mở thêm thẻ có đáng không?
               </h3>
-              <p className="text-xs text-slate-500 leading-relaxed">
-                Đối chiếu trực tiếp quyền lợi nhận thêm trước khi nộp hồ sơ mở thẻ, tránh mở thẻ
-                thừa gây tốn phí thường niên.
+              <p className="text-xs text-ink-2 leading-relaxed">
+                Đang phân vân? So thử hai card xem chiếc mới có mang lại thêm quyền lợi vượt trội hay không.
               </p>
             </div>
 
-            <div className="mt-5 pt-3 border-t border-slate-100 flex items-center text-xs font-bold text-amber-700 group-hover:translate-x-1 transition-transform">
-              <span>Chạy mô phỏng</span>
-              <ArrowRight className="w-3.5 h-3.5 ml-1" />
+            <div className="mt-5 pt-3 border-t border-line flex items-center text-xs font-bold text-blue-700 group-hover:translate-x-1 transition-transform">
+              <span>So thử nhé →</span>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Product Philosophy & Differentiator */}
-      <section className="bg-slate-50 rounded-3xl p-8 sm:p-10 border border-slate-200/80">
+      {/* Cardy 3-Step Philosophy */}
+      <section className="bg-white rounded-3xl p-8 sm:p-12 border border-line shadow-card">
+        <div className="text-center max-w-xl mx-auto mb-10">
+          <span className="text-xs font-bold text-blue-600 uppercase tracking-wider block mb-1">
+            Cách Cardy hoạt động
+          </span>
+          <h2 className="font-display text-2xl font-black text-navy-900 tracking-tight">
+            Chọn card đúng gu trong 3 bước
+          </h2>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="space-y-2">
-            <div className="text-teal-600 font-extrabold text-sm uppercase tracking-wider">
-              01. Theo ngữ cảnh thực tế
+          <div className="space-y-3 p-6 rounded-2xl bg-paper border border-line">
+            <div className="w-10 h-10 rounded-xl bg-blue-600 text-white font-display font-black text-lg flex items-center justify-center shadow-press">
+              1
             </div>
-            <h4 className="text-base font-bold text-slate-900">Không có thẻ "tốt nhất mọi mặt"</h4>
-            <p className="text-xs text-slate-500 leading-relaxed">
-              Một chiếc thẻ hoàn 15% mua sắm online có thể không mang lại lợi ích gì khi bạn đi ăn
-              uống hay đi máy bay. RightCard phân tích chính xác từng mục tiêu.
+            <h4 className="text-base font-bold text-navy-900">Kể Cardy nghe</h4>
+            <p className="text-xs text-ink-2 leading-relaxed">
+              Ăn ngoài, mua online hay đi xa? Chọn vài mục bạn tiêu nhiều nhất trong tháng.
             </p>
           </div>
 
-          <div className="space-y-2">
-            <div className="text-teal-600 font-extrabold text-sm uppercase tracking-wider">
-              02. Quyền lợi tính bằng tiền
+          <div className="space-y-3 p-6 rounded-2xl bg-paper border border-line">
+            <div className="w-10 h-10 rounded-xl bg-blue-600 text-white font-display font-black text-lg flex items-center justify-center shadow-press">
+              2
             </div>
-            <h4 className="text-base font-bold text-slate-900">Không đánh đố bằng điểm số</h4>
-            <p className="text-xs text-slate-500 leading-relaxed">
-              Thay vì hiển thị "Điểm uy tín: 92/100", RightCard tính toán trực tiếp số tiền đồng bạn
-              sẽ nhận lại hoặc tiết kiệm được trên mỗi giao dịch.
+            <h4 className="text-base font-bold text-navy-900">Xem card hợp gu</h4>
+            <p className="text-xs text-ink-2 leading-relaxed">
+              Hoàn tiền, phí thường niên và ưu đãi đối tác — được đặt cạnh nhau minh bạch, dễ so sánh.
             </p>
           </div>
 
-          <div className="space-y-2">
-            <div className="text-teal-600 font-extrabold text-sm uppercase tracking-wider">
-              03. Minh bạch điều khoản
+          <div className="space-y-3 p-6 rounded-2xl bg-paper border border-line">
+            <div className="w-10 h-10 rounded-xl bg-blue-600 text-white font-display font-black text-lg flex items-center justify-center shadow-press">
+              3
             </div>
-            <h4 className="text-base font-bold text-slate-900">Làm rõ những gì bạn phải đánh đổi</h4>
-            <p className="text-xs text-slate-500 leading-relaxed">
-              Chúng tôi luôn chỉ rõ phí thường niên, hạn mức hoàn tối đa và điều kiện chi tiêu tối
-              thiểu để bạn không bị bất ngờ bởi các điều khoản ẩn.
+            <h4 className="text-base font-bold text-navy-900">Chọn card đi</h4>
+            <p className="text-xs text-ink-2 leading-relaxed">
+              Ưng chiếc nào thì lưu vào ví để theo dõi hoặc xem chi tiết để đăng ký trực tiếp với ngân hàng.
             </p>
           </div>
         </div>

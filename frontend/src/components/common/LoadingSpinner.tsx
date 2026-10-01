@@ -1,31 +1,37 @@
 import React from 'react';
-import { Loader2 } from 'lucide-react';
+import { CardyMascot } from '../brand/Mascot';
 
-interface LoadingSpinnerProps {
+export interface LoadingSpinnerProps {
   label?: string;
   size?: 'sm' | 'md' | 'lg';
   fullHeight?: boolean;
 }
 
 export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
-  label = 'Đang tải dữ liệu...',
+  label = 'Để Cardy xem card nào hợp…',
   size = 'md',
   fullHeight = false,
 }) => {
-  const iconSizes = {
-    sm: 'w-4 h-4',
-    md: 'w-6 h-6',
-    lg: 'w-8 h-8',
+  const mascotSizes = {
+    sm: 64,
+    md: 96,
+    lg: 130,
   };
 
   return (
     <div
-      className={`flex flex-col items-center justify-center gap-3 text-slate-500 py-8 ${
+      className={`flex flex-col items-center justify-center gap-3 py-8 select-none ${
         fullHeight ? 'min-h-[300px]' : ''
       }`}
     >
-      <Loader2 className={`${iconSizes[size]} animate-spin text-brand-600`} />
-      {label && <p className="text-xs font-medium text-slate-500">{label}</p>}
+      <div className="animate-bounce" style={{ animationDuration: '2s' }}>
+        <CardyMascot pose="search" size={mascotSizes[size]} />
+      </div>
+      {label && (
+        <p className="text-xs font-bold text-ink-2 bg-white px-3.5 py-1.5 rounded-full border border-line shadow-2xs">
+          {label}
+        </p>
+      )}
     </div>
   );
 };

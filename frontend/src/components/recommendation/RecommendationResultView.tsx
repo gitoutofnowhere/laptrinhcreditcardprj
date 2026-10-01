@@ -6,14 +6,12 @@ import { Button } from '../common/Button';
 import {
   Sparkles,
   CheckCircle2,
-  AlertCircle,
   Plus,
   Check,
   Eye,
   RotateCcw,
   Tag,
   ShieldAlert,
-  ShieldCheck,
 } from 'lucide-react';
 
 interface RecommendationResultViewProps {
@@ -42,24 +40,24 @@ export const RecommendationResultView: React.FC<RecommendationResultViewProps> =
   return (
     <div className="space-y-8 animate-fadeIn">
       {/* Top Banner: Contextual decision */}
-      <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden border border-slate-700/60">
-        <div className="absolute right-0 top-0 w-80 h-80 bg-teal-500/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="bg-navy-900 rounded-3xl p-6 sm:p-8 text-white shadow-lift relative overflow-hidden border border-navy-950">
+        <div className="absolute right-0 top-0 w-80 h-80 bg-blue-600/15 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="space-y-2">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-500/20 text-teal-300 text-xs font-bold border border-teal-500/30">
-              <Sparkles className="w-3.5 h-3.5 text-teal-400" />
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/20 text-blue-200 text-xs font-bold border border-blue-400/30">
+              <Sparkles className="w-3.5 h-3.5 text-sun" />
               <span>
                 {mode === 'USE_EXISTING_CARD'
-                  ? 'Thẻ tối ưu nhất trong ví của bạn'
-                  : 'Gợi ý mở thẻ phù hợp nhất cho bạn'}
+                  ? 'Card tốt nhất trong ví của bạn'
+                  : 'Cardy tìm được vài chiếc hợp gu rồi.'}
               </span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
-              Nên quẹt thẻ <span className="text-teal-400">{recommended_card.name}</span>
+            <h2 className="font-display text-2xl sm:text-3xl font-black tracking-tight text-white">
+              Nên quẹt thẻ <span className="text-sun">{recommended_card.name}</span>
             </h2>
-            <p className="text-xs sm:text-sm text-slate-300 max-w-xl leading-relaxed">
-              Khớp tối đa với khoản chi và khẩu vị thưởng của bạn mà không cần băn khoăn chọn lựa.
+            <p className="text-xs sm:text-sm text-blue-100 max-w-xl leading-relaxed">
+              Thẻ này hợp bạn đấy! Khớp tối đa với khoản chi và ưu đãi bạn cần mà không phải băn khoăn.
             </p>
           </div>
 
@@ -68,7 +66,7 @@ export const RecommendationResultView: React.FC<RecommendationResultViewProps> =
             size="sm"
             onClick={onReset}
             icon={<RotateCcw className="w-3.5 h-3.5" />}
-            className="bg-white/10 text-white border-white/20 hover:bg-white/20 self-start md:self-center shrink-0"
+            className="bg-white/10 text-white border-white/20 hover:bg-white/20 self-start md:self-center shrink-0 font-bold"
           >
             Tính khoản chi khác
           </Button>
@@ -76,10 +74,10 @@ export const RecommendationResultView: React.FC<RecommendationResultViewProps> =
       </div>
 
       {/* Main Recommendation Spotlight */}
-      <div className="bg-white rounded-3xl border-2 border-teal-500/40 shadow-lg p-6 sm:p-8 relative">
-        <div className="absolute -top-3.5 left-8 bg-teal-600 text-white text-xs font-extrabold px-3.5 py-1 rounded-full uppercase tracking-wider shadow-sm flex items-center gap-1.5">
-          <CheckCircle2 className="w-3.5 h-3.5" />
-          <span>Khuyến nghị tối ưu nhất</span>
+      <div className="bg-white rounded-3xl border-2 border-blue-600 shadow-lift p-6 sm:p-8 relative">
+        <div className="absolute -top-3.5 left-8 bg-blue-600 text-white text-xs font-black px-4 py-1 rounded-full uppercase tracking-wider shadow-press flex items-center gap-1.5">
+          <CheckCircle2 className="w-3.5 h-3.5 text-sun" />
+          <span>★ Phù hợp nhất</span>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start pt-2">
@@ -89,34 +87,34 @@ export const RecommendationResultView: React.FC<RecommendationResultViewProps> =
               cardName={recommended_card.name}
               bankName={bankDisplayName}
               size="md"
-              className="w-full max-w-xs shadow-xl"
+              className="w-full max-w-xs shadow-lift"
             />
             <div className="mt-4 flex items-center gap-2 w-full max-w-xs">
               <Button
                 variant="outline"
                 size="sm"
-                className="flex-1"
+                className="flex-1 font-bold"
                 onClick={() => onViewDetailById(recommended_card.card_id)}
                 icon={<Eye className="w-3.5 h-3.5" />}
               >
-                Xem chi tiết thẻ
+                Xem card
               </Button>
 
               <Button
                 variant={isRecommendedInWallet ? 'secondary' : 'primary'}
                 size="sm"
-                className="flex-1"
+                className="flex-1 font-bold"
                 loading={loadingWalletCardId === recommended_card.card_id}
                 onClick={() => onToggleWalletById(recommended_card.card_id)}
                 icon={
                   isRecommendedInWallet ? (
-                    <Check className="w-3.5 h-3.5 text-teal-600" />
+                    <Check className="w-3.5 h-3.5 text-success stroke-[3]" />
                   ) : (
                     <Plus className="w-3.5 h-3.5" />
                   )
                 }
               >
-                {isRecommendedInWallet ? 'Trong ví' : 'Thêm ví'}
+                {isRecommendedInWallet ? 'Trong ví' : 'Lưu card'}
               </Button>
             </div>
           </div>
@@ -124,18 +122,18 @@ export const RecommendationResultView: React.FC<RecommendationResultViewProps> =
           {/* Right: What You Gain, Why it fits, What to watch out */}
           <div className="lg:col-span-7 space-y-6">
             {/* What you gain (Estimated Benefit Box) */}
-            <div className="p-5 rounded-2xl bg-teal-50/80 border border-teal-200/80 flex items-start justify-between gap-4">
+            <div className="p-5 rounded-2xl bg-blue-50 border border-blue-200 flex items-start justify-between gap-4">
               <div>
-                <span className="text-[11px] font-bold uppercase tracking-wider text-teal-800 block">
-                  Bạn nhận được (What you gain)
+                <span className="text-[11px] font-bold uppercase tracking-wider text-blue-700 block">
+                  Bạn nhận được ước tính:
                 </span>
-                <div className="text-2xl sm:text-3xl font-black text-teal-950 mt-1">
+                <div className="text-2xl sm:text-3xl font-black text-navy-900 mt-1">
                   {recommended_card.estimated_value && recommended_card.estimated_value > 0
                     ? `+${formatVND(recommended_card.estimated_value)}`
                     : 'Quyền lợi tích lũy cao nhất'}
                 </div>
                 {contextAmount && recommended_card.estimated_value ? (
-                  <p className="text-xs text-teal-700 mt-1 font-medium">
+                  <p className="text-xs text-blue-700 mt-1 font-semibold">
                     Tương đương nhận lại ~
                     {(
                       (recommended_card.estimated_value / contextAmount) *
@@ -144,15 +142,15 @@ export const RecommendationResultView: React.FC<RecommendationResultViewProps> =
                     % trên hóa đơn {formatVND(contextAmount)}
                   </p>
                 ) : (
-                  <p className="text-xs text-teal-700 mt-1">
+                  <p className="text-xs text-blue-700 mt-1 font-medium">
                     Theo cấu trúc hoàn thưởng tối ưu của {bankDisplayName}.
                   </p>
                 )}
               </div>
 
               <div className="hidden sm:block text-right shrink-0">
-                <span className="text-[11px] text-teal-700 block font-medium">Ngân hàng phát hành</span>
-                <span className="font-bold text-slate-800 text-sm">
+                <span className="text-[11px] text-ink-3 block font-medium">Ngân hàng phát hành</span>
+                <span className="font-bold text-navy-900 text-sm">
                   {bankDisplayName}
                 </span>
               </div>
@@ -160,37 +158,37 @@ export const RecommendationResultView: React.FC<RecommendationResultViewProps> =
 
             {/* Why This Card Fits (Reasons) */}
             <div>
-              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-700 mb-2.5 flex items-center gap-1.5">
-                <CheckCircle2 className="w-4 h-4 text-teal-600" />
-                <span>Vì sao thẻ này phù hợp với bạn (Why this card fits):</span>
+              <h4 className="text-xs font-bold uppercase tracking-wider text-navy-900 mb-2.5 flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 text-blue-600" />
+                <span>Ưu đãi tại cửa hàng yêu thích & Điểm cộng:</span>
               </h4>
 
               <div className="space-y-2">
                 {recommended_card.reasons.map((reason, idx) => (
                   <div
                     key={idx}
-                    className="flex items-start gap-2.5 text-xs text-slate-700 bg-slate-50/90 p-3 rounded-xl border border-slate-100 font-medium"
+                    className="flex items-start gap-2.5 text-xs text-navy-900 bg-paper p-3 rounded-xl border border-line font-medium"
                   >
-                    <div className="w-1.5 h-1.5 rounded-full bg-teal-600 mt-1.5 shrink-0" />
+                    <div className="w-1.5 h-1.5 rounded-full bg-blue-600 mt-1.5 shrink-0" />
                     <span className="leading-relaxed">{reason}</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* What you give up / Important conditions (Trade-offs) */}
-            <div className="p-4 rounded-2xl bg-amber-50/60 border border-amber-200/70 space-y-2">
-              <div className="flex items-center gap-2 text-xs font-bold text-amber-900">
-                <ShieldAlert className="w-4 h-4 text-amber-600 shrink-0" />
-                <span>Điều cần lưu ý & Đánh đổi (What you give up):</span>
+            {/* Honest Notes / Trade-offs */}
+            <div className="p-4 rounded-2xl bg-[#fff1cc]/60 border border-[#ffc93c]/60 space-y-2">
+              <div className="flex items-center gap-2 text-xs font-bold text-[#9a5f00]">
+                <ShieldAlert className="w-4 h-4 text-[#9a5f00] shrink-0" />
+                <span>Lưu ý một chút:</span>
               </div>
 
-              <div className="text-xs text-slate-600 space-y-1.5 pt-0.5">
+              <div className="text-xs text-ink-2 space-y-1.5 pt-0.5 font-medium">
                 <p className="leading-relaxed">
-                  • <strong>Hạn mức & Điều kiện sao kê:</strong> Kiểm tra mức chi tiêu tối thiểu trong kỳ hoặc hạn mức hoàn tiền tối đa theo tháng của ngân hàng.
+                  • <strong>Hạn mức & Kỳ sao kê:</strong> Kiểm tra mức chi tiêu tối thiểu trong kỳ hoặc hạn mức hoàn tiền tối đa theo tháng của ngân hàng.
                 </p>
                 <p className="leading-relaxed">
-                  • <strong>Phí thường niên & Thu nhập:</strong> Nhấp vào <em>"Xem chi tiết thẻ"</em> bên cạnh để kiểm tra cụ thể biểu phí thường niên và điều kiện miễn phí hàng năm.
+                  • <strong>Phí thường niên:</strong> Phí thường niên có thể phát sinh nếu không đạt điều kiện miễn phí — nhưng benefit hoàn tiền thường bù đắp rất tốt nếu chi tiêu đúng ngành.
                 </p>
               </div>
             </div>
@@ -203,15 +201,15 @@ export const RecommendationResultView: React.FC<RecommendationResultViewProps> =
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-lg font-bold text-slate-900 tracking-tight">
-                Các lựa chọn thay thế đáng cân nhắc (Alternative options)
+              <h3 className="font-display text-lg font-black text-navy-900 tracking-tight">
+                Đang phân vân? Xem thêm mấy chiếc này:
               </h3>
-              <p className="text-xs text-slate-500">
-                Nếu bạn cần tiêu chí khác như phí thường niên 0đ hoặc ưu đãi danh mục chuyên biệt
+              <p className="text-xs text-ink-2">
+                Các lựa chọn khác cũng rất đáng cân nhắc nếu bạn quan tâm tiêu chí khác
               </p>
             </div>
-            <span className="text-xs font-semibold text-slate-400 bg-slate-100 px-2.5 py-1 rounded-lg">
-              {alternatives.length} phương án
+            <span className="text-xs font-bold text-ink-3 bg-paper px-2.5 py-1 rounded-lg border border-line">
+              {alternatives.length} gợi ý
             </span>
           </div>
 
@@ -224,36 +222,36 @@ export const RecommendationResultView: React.FC<RecommendationResultViewProps> =
               return (
                 <div
                   key={alt.card_id}
-                  className="bg-white rounded-2xl border border-slate-200/90 p-5 hover:border-slate-300 transition-all flex flex-col justify-between shadow-sm"
+                  className="bg-white rounded-2xl border border-line p-5 hover:border-blue-300 transition-all flex flex-col justify-between shadow-card hover:shadow-lift"
                 >
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
-                      <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
-                        Lựa chọn #{alt.rank}
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-ink-3">
+                        Gợi ý #{alt.rank}
                       </span>
-                      <span className="text-[11px] font-semibold text-teal-800 bg-teal-50 px-2 py-0.5 rounded-md border border-teal-200/60">
+                      <span className="text-[11px] font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded-md border border-blue-200">
                         {localizedBestFor}
                       </span>
                     </div>
 
                     <div>
-                      <h4 className="font-bold text-slate-900 text-sm line-clamp-1">{alt.name}</h4>
-                      <p className="text-xs text-slate-500 mt-0.5">{altBankName}</p>
+                      <h4 className="font-bold text-navy-900 text-sm line-clamp-1">{alt.name}</h4>
+                      <p className="text-xs text-ink-3 mt-0.5">{altBankName}</p>
                     </div>
 
                     <div className="pt-2">
-                      <div className="text-[11px] text-slate-600 bg-slate-50 p-2.5 rounded-xl border border-slate-100 flex items-center gap-1.5">
-                        <Tag className="w-3.5 h-3.5 text-teal-600 shrink-0" />
-                        <span className="truncate font-medium">{localizedBestFor}</span>
+                      <div className="text-[11px] text-ink-2 bg-paper p-2.5 rounded-xl border border-line flex items-center gap-1.5">
+                        <Tag className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+                        <span className="truncate font-semibold">{localizedBestFor}</span>
                       </div>
                     </div>
                   </div>
 
-                  <div className="mt-5 pt-3 border-t border-slate-100 flex items-center gap-2">
+                  <div className="mt-5 pt-3 border-t border-line flex items-center gap-2">
                     <Button
                       variant="outline"
                       size="sm"
-                      className="flex-1"
+                      className="flex-1 font-bold"
                       onClick={() => onViewDetailById(alt.card_id)}
                     >
                       Chi tiết
@@ -261,18 +259,18 @@ export const RecommendationResultView: React.FC<RecommendationResultViewProps> =
                     <Button
                       variant={inWallet ? 'secondary' : 'primary'}
                       size="sm"
-                      className="flex-1"
+                      className="flex-1 font-bold"
                       loading={loadingWalletCardId === alt.card_id}
                       onClick={() => onToggleWalletById(alt.card_id)}
                       icon={
                         inWallet ? (
-                          <Check className="w-3.5 h-3.5 text-teal-600" />
+                          <Check className="w-3.5 h-3.5 text-success stroke-[3]" />
                         ) : (
                           <Plus className="w-3.5 h-3.5" />
                         )
                       }
                     >
-                      {inWallet ? 'Trong ví' : 'Thêm ví'}
+                      {inWallet ? 'Trong ví' : 'Lưu card'}
                     </Button>
                   </div>
                 </div>

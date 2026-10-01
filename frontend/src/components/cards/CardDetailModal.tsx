@@ -14,13 +14,11 @@ import {
   Building2,
   ExternalLink,
   ShieldCheck,
-  CheckCircle2,
   Gift,
   Plus,
   Check,
   Calculator,
   Coins,
-  ArrowRight,
 } from 'lucide-react';
 
 interface CardDetailModalProps {
@@ -110,7 +108,7 @@ export const CardDetailModal: React.FC<CardDetailModalProps> = ({
       maxWidth="2xl"
     >
       {loading ? (
-        <LoadingSpinner label="Đang tra cứu quyền lợi và điều khoản thẻ..." fullHeight />
+        <LoadingSpinner label="Để Cardy xem chi tiết quyền lợi thẻ..." fullHeight />
       ) : error ? (
         <ErrorNotice
           message={error}
@@ -127,7 +125,7 @@ export const CardDetailModal: React.FC<CardDetailModalProps> = ({
       ) : (
         <div className="space-y-6">
           {/* Card Visual & Top overview */}
-          <div className="flex flex-col sm:flex-row items-center gap-6 p-4 rounded-2xl bg-slate-50 border border-slate-100">
+          <div className="flex flex-col sm:flex-row items-center gap-6 p-5 rounded-2xl bg-paper border border-line">
             <CreditCardVisual
               cardName={card.name}
               bankId={card.bank_id}
@@ -136,11 +134,12 @@ export const CardDetailModal: React.FC<CardDetailModalProps> = ({
               cardTier={card.card_tier}
               annualFee={card.annual_fee}
               size="sm"
+              className="shadow-card"
             />
 
             <div className="flex-1 space-y-3 w-full">
               <div className="flex flex-wrap items-center gap-2">
-                <span className="text-xs font-bold px-2.5 py-1 rounded-lg bg-teal-100 text-teal-800 border border-teal-200">
+                <span className="text-xs font-bold px-2.5 py-1 rounded-lg bg-blue-50 text-blue-700 border border-blue-200">
                   {bankFull}
                 </span>
                 {card.card_tier && (
@@ -151,7 +150,7 @@ export const CardDetailModal: React.FC<CardDetailModalProps> = ({
                   </span>
                 )}
                 {card.network && (
-                  <span className="text-xs font-semibold px-2 py-0.5 rounded-lg bg-slate-200 text-slate-700">
+                  <span className="text-xs font-bold px-2 py-0.5 rounded-lg bg-paper text-ink-2 border border-line">
                     {card.network}
                   </span>
                 )}
@@ -159,26 +158,26 @@ export const CardDetailModal: React.FC<CardDetailModalProps> = ({
 
               <div className="grid grid-cols-2 gap-2 text-xs pt-1">
                 <div>
-                  <span className="text-slate-400 block font-medium">Phí thường niên:</span>
-                  <span className="font-bold text-slate-800 text-sm">
-                    {card.annual_fee === 0 ? 'Miễn phí trọn đời (0 ₫)' : formatVND(card.annual_fee)}
+                  <span className="text-ink-3 block font-bold uppercase text-[10px]">Phí thường niên:</span>
+                  <span className="font-bold text-navy-900 text-sm mt-0.5 block">
+                    {card.annual_fee === 0 ? '0đ phí năm' : formatVND(card.annual_fee)}
                   </span>
                 </div>
                 <div>
-                  <span className="text-slate-400 block font-medium">Yêu cầu thu nhập:</span>
-                  <span className="font-bold text-slate-800 text-sm">
+                  <span className="text-ink-3 block font-bold uppercase text-[10px]">Yêu cầu thu nhập:</span>
+                  <span className="font-bold text-navy-900 text-sm mt-0.5 block">
                     {card.minimum_income && card.minimum_income > 0
                       ? `${formatVND(card.minimum_income)}/tháng`
-                      : 'Không yêu cầu chứng minh'}
+                      : 'Không yêu cầu'}
                   </span>
                 </div>
               </div>
 
               {card.annual_fee_waiver_condition && (
-                <div className="flex items-start gap-1.5 text-xs text-slate-600 bg-amber-50/70 p-2.5 rounded-xl border border-amber-200/60">
-                  <ShieldCheck className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+                <div className="flex items-start gap-1.5 text-xs text-ink-2 bg-[#fff1cc]/60 p-2.5 rounded-xl border border-[#ffc93c]/50">
+                  <ShieldCheck className="w-4 h-4 text-[#9a5f00] shrink-0 mt-0.5" />
                   <span>
-                    <strong>Điều kiện miễn phí thường niên:</strong>{' '}
+                    <strong className="text-navy-900">Điều kiện miễn phí:</strong>{' '}
                     {card.annual_fee_waiver_condition}
                   </span>
                 </div>
@@ -187,20 +186,20 @@ export const CardDetailModal: React.FC<CardDetailModalProps> = ({
           </div>
 
           {/* Interactive Live Reward Calculator */}
-          <div className="p-4 rounded-2xl bg-gradient-to-br from-teal-50/60 to-emerald-50/60 border border-teal-200/80 space-y-3">
+          <div className="p-4 rounded-2xl bg-blue-50/70 border border-blue-200 space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold uppercase tracking-wider text-teal-900 flex items-center gap-1.5">
-                <Calculator className="w-4 h-4 text-teal-700" />
+              <span className="text-xs font-bold uppercase tracking-wider text-blue-800 flex items-center gap-1.5">
+                <Calculator className="w-4 h-4 text-blue-600" />
                 <span>Thử tính hoàn tiền khi quẹt thẻ này</span>
               </span>
-              <span className="text-[10px] text-teal-700 font-semibold bg-white/80 px-2 py-0.5 rounded-md">
-                Công cụ tính thực tế
+              <span className="text-[10px] text-blue-700 font-bold bg-white px-2 py-0.5 rounded-md border border-blue-200">
+                Tính nhanh
               </span>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
               <div>
-                <label className="text-[10px] font-bold text-slate-500 uppercase block mb-1">
+                <label className="text-[10px] font-bold text-ink-3 uppercase block mb-1">
                   Số tiền quẹt (₫)
                 </label>
                 <input
@@ -209,19 +208,19 @@ export const CardDetailModal: React.FC<CardDetailModalProps> = ({
                   step="100000"
                   value={calcAmount || ''}
                   onChange={(e) => setCalcAmount(Number(e.target.value))}
-                  className="w-full text-xs font-bold text-slate-900 bg-white px-3 py-2 rounded-xl border border-teal-200 focus:outline-none focus:ring-2 focus:ring-teal-700"
+                  className="w-full text-xs font-bold text-navy-900 bg-white px-3 py-2 rounded-xl border border-line focus:outline-none focus:ring-2 focus:ring-blue-600"
                   placeholder="2000000"
                 />
               </div>
 
               <div>
-                <label className="text-[10px] font-bold text-slate-500 uppercase block mb-1">
+                <label className="text-[10px] font-bold text-ink-3 uppercase block mb-1">
                   Danh mục chi tiêu
                 </label>
                 <select
                   value={calcCategory}
                   onChange={(e) => setCalcCategory(e.target.value)}
-                  className="w-full text-xs font-bold text-slate-800 bg-white px-3 py-2 rounded-xl border border-teal-200 focus:outline-none focus:ring-2 focus:ring-teal-700"
+                  className="w-full text-xs font-bold text-navy-900 bg-white px-3 py-2 rounded-xl border border-line focus:outline-none focus:ring-2 focus:ring-blue-600"
                 >
                   <option value="Online">Online / Mua sắm</option>
                   <option value="Dining">Dining / Ăn uống</option>
@@ -237,7 +236,7 @@ export const CardDetailModal: React.FC<CardDetailModalProps> = ({
                   loading={calcLoading}
                   onClick={handleCalculateReward}
                   icon={<Coins className="w-3.5 h-3.5" />}
-                  className="w-full bg-teal-800 hover:bg-teal-900 text-white font-bold"
+                  className="w-full font-bold"
                 >
                   Tính tiền hoàn
                 </Button>
@@ -245,21 +244,21 @@ export const CardDetailModal: React.FC<CardDetailModalProps> = ({
             </div>
 
             {calcResult && (
-              <div className="mt-2 p-3 bg-white rounded-xl border border-teal-200/80 flex items-center justify-between gap-3 animate-fadeIn">
+              <div className="mt-2 p-3.5 bg-white rounded-xl border border-blue-200 flex items-center justify-between gap-3 animate-fadeIn">
                 <div>
-                  <span className="text-[10px] text-slate-400 block uppercase font-bold">
+                  <span className="text-[10px] text-ink-3 block uppercase font-bold">
                     Tiền nhận lại ước tính:
                   </span>
-                  <div className="text-lg font-black text-teal-800">
+                  <div className="text-lg font-black text-navy-900">
                     +{formatVND(calcResult.estimated_reward_value)}
                   </div>
                   {calcResult.conditions_note && (
-                    <p className="text-[10px] text-slate-500 mt-0.5">{calcResult.conditions_note}</p>
+                    <p className="text-[10px] text-ink-3 mt-0.5">{calcResult.conditions_note}</p>
                   )}
                 </div>
 
                 <div className="text-right">
-                  <span className="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-lg border border-emerald-200">
+                  <span className="text-xs font-bold text-success bg-[#dcf5ea] px-2.5 py-1 rounded-lg border border-[#2fbf8f]/40">
                     {((calcResult.estimated_reward_value / (calcAmount || 1)) * 100).toFixed(1)}% hoàn
                   </span>
                 </div>
@@ -270,8 +269,8 @@ export const CardDetailModal: React.FC<CardDetailModalProps> = ({
           {/* Category Benefits Section */}
           <div>
             <div className="flex items-center gap-2 mb-3">
-              <Tag className="w-4 h-4 text-teal-600" />
-              <h4 className="text-sm font-bold text-slate-900">
+              <Tag className="w-4 h-4 text-blue-600" />
+              <h4 className="text-sm font-bold text-navy-900">
                 Ưu đãi theo danh mục chi tiêu ({detail?.benefits?.length || 0})
               </h4>
             </div>
@@ -281,21 +280,21 @@ export const CardDetailModal: React.FC<CardDetailModalProps> = ({
                 {detail.benefits.map((b) => (
                   <div
                     key={b.id}
-                    className="p-3.5 rounded-xl border border-slate-200/80 bg-white hover:border-teal-200 transition-colors"
+                    className="p-3.5 rounded-2xl border border-line bg-white hover:border-blue-300 transition-colors shadow-2xs"
                   >
                     <div className="flex items-start justify-between gap-2">
-                      <span className="font-semibold text-xs text-slate-800">{b.category}</span>
-                      <span className="font-extrabold text-xs text-teal-700 bg-teal-50 px-2 py-0.5 rounded-md border border-teal-100">
+                      <span className="font-bold text-xs text-navy-900">{b.category}</span>
+                      <span className="font-extrabold text-xs text-blue-700 bg-blue-50 px-2 py-0.5 rounded-md border border-blue-200">
                         {formatBenefit(b.benefit_value, b.benefit_unit, b.benefit_type)}
                       </span>
                     </div>
 
                     {(b.maximum_benefit || b.minimum_spend || b.conditions) && (
-                      <div className="mt-2 pt-2 border-t border-slate-100 space-y-1 text-[11px] text-slate-500">
+                      <div className="mt-2 pt-2 border-t border-line space-y-1 text-[11px] text-ink-2">
                         {b.maximum_benefit && (
                           <div className="flex items-center justify-between">
                             <span>Giới hạn tối đa:</span>
-                            <span className="font-semibold text-slate-700">
+                            <span className="font-bold text-navy-900">
                               {formatVND(b.maximum_benefit)}/{b.frequency || 'tháng'}
                             </span>
                           </div>
@@ -303,13 +302,13 @@ export const CardDetailModal: React.FC<CardDetailModalProps> = ({
                         {b.minimum_spend && b.minimum_spend > 0 && (
                           <div className="flex items-center justify-between">
                             <span>Chi tiêu tối thiểu:</span>
-                            <span className="font-semibold text-slate-700">
+                            <span className="font-bold text-navy-900">
                               {formatVND(b.minimum_spend)}
                             </span>
                           </div>
                         )}
                         {b.conditions && (
-                          <p className="text-[10px] text-slate-400 italic mt-1 line-clamp-2">
+                          <p className="text-[10px] text-ink-3 italic mt-1 line-clamp-2">
                             * {b.conditions}
                           </p>
                         )}
@@ -319,7 +318,7 @@ export const CardDetailModal: React.FC<CardDetailModalProps> = ({
                 ))}
               </div>
             ) : (
-              <div className="p-4 rounded-xl bg-slate-50 text-center text-xs text-slate-500 border border-slate-100">
+              <div className="p-4 rounded-xl bg-paper text-center text-xs text-ink-3 border border-line">
                 Áp dụng chương trình tích lũy chuẩn theo biểu phí ngân hàng.
               </div>
             )}
@@ -328,9 +327,9 @@ export const CardDetailModal: React.FC<CardDetailModalProps> = ({
           {/* Merchant Deals Section */}
           <div>
             <div className="flex items-center gap-2 mb-3">
-              <Gift className="w-4 h-4 text-amber-600" />
-              <h4 className="text-sm font-bold text-slate-900">
-                Ưu đãi đối tác / Thương hiệu độc quyền ({detail?.merchants?.length || 0})
+              <Gift className="w-4 h-4 text-sun" />
+              <h4 className="text-sm font-bold text-navy-900">
+                Ưu đãi quán quen & Đối tác độc quyền ({detail?.merchants?.length || 0})
               </h4>
             </div>
 
@@ -339,27 +338,27 @@ export const CardDetailModal: React.FC<CardDetailModalProps> = ({
                 {detail.merchants.map((m) => (
                   <div
                     key={m.id}
-                    className="p-3.5 rounded-xl border border-slate-200/80 bg-white hover:border-amber-200 transition-colors"
+                    className="p-3.5 rounded-2xl border border-line bg-white hover:border-sun transition-colors shadow-2xs"
                   >
                     <div className="flex items-start justify-between gap-2">
                       <div className="flex items-center gap-1.5">
-                        <Building2 className="w-3.5 h-3.5 text-slate-400" />
-                        <span className="font-bold text-xs text-slate-800">
+                        <Building2 className="w-3.5 h-3.5 text-ink-3" />
+                        <span className="font-bold text-xs text-navy-900">
                           {m.merchant_name || m.merchant_id}
                         </span>
                       </div>
-                      <span className="font-extrabold text-xs text-amber-800 bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200">
+                      <span className="font-extrabold text-xs text-[#9a5f00] bg-[#fff1cc] px-2 py-0.5 rounded-md border border-[#ffc93c]/50">
                         {formatBenefit(m.benefit_value, m.benefit_unit, m.benefit_type)}
                       </span>
                     </div>
 
                     {m.conditions && (
-                      <p className="mt-2 text-[11px] text-slate-500 leading-normal">
+                      <p className="mt-2 text-[11px] text-ink-2 leading-normal">
                         {m.conditions}
                       </p>
                     )}
                     {m.maximum_benefit && (
-                      <p className="mt-1 text-[10px] text-slate-400">
+                      <p className="mt-1 text-[10px] text-ink-3">
                         Giảm tối đa: {formatVND(m.maximum_benefit)}
                       </p>
                     )}
@@ -367,26 +366,26 @@ export const CardDetailModal: React.FC<CardDetailModalProps> = ({
                 ))}
               </div>
             ) : (
-              <div className="p-4 rounded-xl bg-slate-50 text-center text-xs text-slate-500 border border-slate-100">
+              <div className="p-4 rounded-xl bg-paper text-center text-xs text-ink-3 border border-line">
                 Áp dụng chương trình ưu đãi tích hợp chung của tổ chức thẻ.
               </div>
             )}
           </div>
 
           {/* Bank & External Application */}
-          <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-slate-100">
+          <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-line">
             {detail?.bank?.website ? (
               <a
                 href={detail.bank.website}
                 target="_blank"
                 rel="noreferrer"
-                className="text-xs text-teal-700 hover:text-teal-900 inline-flex items-center gap-1 font-semibold"
+                className="text-xs text-blue-700 hover:text-blue-900 inline-flex items-center gap-1 font-bold"
               >
                 <span>Xem trang chủ {bankFull}</span>
                 <ExternalLink className="w-3.5 h-3.5" />
               </a>
             ) : (
-              <span className="text-xs text-slate-400">Ngân hàng phát hành: {bankFull}</span>
+              <span className="text-xs text-ink-3">Ngân hàng phát hành: {bankFull}</span>
             )}
 
             <div className="flex items-center gap-2 w-full sm:w-auto">
@@ -398,14 +397,14 @@ export const CardDetailModal: React.FC<CardDetailModalProps> = ({
                   onClick={() => onToggleWallet(card)}
                   icon={
                     isInWallet ? (
-                      <Check className="w-4 h-4 text-teal-600" />
+                      <Check className="w-4 h-4 text-success stroke-[3]" />
                     ) : (
                       <Plus className="w-4 h-4" />
                     )
                   }
                   className="w-full sm:w-auto font-bold"
                 >
-                  {isInWallet ? 'Đã có trong ví của bạn' : 'Thêm thẻ này vào ví'}
+                  {isInWallet ? 'Đã có trong ví của bạn' : 'Lưu card vào ví'}
                 </Button>
               )}
             </div>
