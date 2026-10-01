@@ -12,6 +12,13 @@ class Settings(BaseSettings):
         "postgresql://postgres:123456@localhost:5432/rightcard_db"
     )
 
+    @property
+    def sync_database_url(self) -> str:
+        url = self.DATABASE_URL
+        if url.startswith("postgres://"):
+            url = url.replace("postgres://", "postgresql://", 1)
+        return url
+
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
 settings = Settings()

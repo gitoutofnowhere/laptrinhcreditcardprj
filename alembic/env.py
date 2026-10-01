@@ -21,7 +21,7 @@ if config.config_file_name:
     fileConfig(config.config_file_name)
 
 # Set DB URL from settings
-config.set_main_option("sqlalchemy.url", settings.DATABASE_URL)
+config.set_main_option("sqlalchemy.url", settings.sync_database_url)
 
 target_metadata = Base.metadata
 
