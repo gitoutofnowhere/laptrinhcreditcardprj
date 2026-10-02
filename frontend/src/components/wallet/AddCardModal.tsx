@@ -143,7 +143,7 @@ export const AddCardModal: React.FC<AddCardModalProps> = ({
                         icon={<Plus className="w-3.5 h-3.5" />}
                         className="bg-blue-600 text-white hover:bg-blue-700 font-bold"
                       >
-                        + Thêm vào ví
+                        Thêm vào ví
                       </Button>
                     )}
                   </div>
