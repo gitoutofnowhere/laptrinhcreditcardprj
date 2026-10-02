@@ -216,7 +216,7 @@ export const SpendingProfileEditor: React.FC<SpendingProfileEditorProps> = ({
           variant="outline"
           size="sm"
           onClick={handleAddItem}
-          icon={<Save className="w-3.5 h-3.5" />}
+          icon={<Plus className="w-3.5 h-3.5" />}
         >
           Thêm khoản chi
         </Button>
