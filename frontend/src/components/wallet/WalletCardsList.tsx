@@ -56,8 +56,8 @@ export const WalletCardsList: React.FC<WalletCardsListProps> = ({
           </p>
         </div>
 
-        <Button size="sm" onClick={onOpenAddModal} className="bg-blue-600 text-white hover:bg-blue-700 font-bold">
-          + Thêm card
+        <Button size="sm" onClick={onOpenAddModal} icon={<Plus className="w-3.5 h-3.5" />} className="bg-blue-600 text-white hover:bg-blue-700 font-bold">
+        Thêm card
         </Button>
       </div>
 
