@@ -1,6 +1,6 @@
-# RightCard Vietnam — Contextual Credit Card & Wallet Optimization
+# Cardy Vietnam — Contextual Credit Card & Wallet Optimization
 
-RightCard là sản phẩm web hỗ trợ người tiêu dùng Việt Nam đưa ra quyết định sử dụng thẻ tín dụng và tối ưu hóa ví thẻ thông minh dựa trên ngữ cảnh thực tế của từng giao dịch (khoản tiền, địa điểm, thương hiệu mua sắm, khẩu vị hoàn tiền/tích điểm, và danh mục thẻ hiện có).
+Cardy là sản phẩm web hỗ trợ người tiêu dùng Việt Nam đưa ra quyết định sử dụng thẻ tín dụng và tối ưu hóa ví thẻ thông minh dựa trên ngữ cảnh thực tế của từng giao dịch (khoản tiền, địa điểm, thương hiệu mua sắm, khẩu vị hoàn tiền/tích điểm, và danh mục thẻ hiện có).
 
 ---
 
