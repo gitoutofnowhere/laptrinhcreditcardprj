@@ -65,6 +65,9 @@ RightCard là sản phẩm web hỗ trợ người tiêu dùng Việt Nam đưa 
 - Phân biệt người dùng qua header `X-User-ID`.
 
 ### Frontend (React + TypeScript + Vite + Tailwind CSS)
+> Mã nguồn frontend nằm ở repo riêng: **https://github.com/gitoutofnowhere/my-frontend-app**
+> (deploy GitHub Pages: https://gitoutofnowhere.github.io/my-frontend-app/). Repo này chỉ chứa backend.
+
 - **Centralized API Client** (`frontend/src/api/`): Toàn bộ lời gọi API được đóng gói chuẩn mực, không gọi fetch rải rác trong UI components.
 - **Component Design System**:
   - Thẻ tín dụng mô phỏng thực tế (`CreditCardVisual`) với chip kim loại, nhận diện ngân hàng và hạng thẻ sang trọng.
@@ -83,7 +86,9 @@ uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
 API docs có tại: `http://127.0.0.1:8000/api/docs`
 
 ### Khởi chạy Frontend
+Frontend là repo riêng, clone vào thư mục `frontend/` (đã được `.gitignore`, git của backend sẽ bỏ qua):
 ```bash
+git clone https://github.com/gitoutofnowhere/my-frontend-app.git frontend
 cd frontend
 npm install
 npm run dev

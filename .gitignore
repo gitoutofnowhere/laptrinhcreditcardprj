@@ -16,8 +16,6 @@ env/
 
 .DS_Store
 
-# Frontend
-frontend/node_modules/
-frontend/dist/
-frontend/dist-ssr/
-frontend/.vite/
+# Frontend lives in its own repo (https://github.com/gitoutofnowhere/my-frontend-app).
+# Clone it into ./frontend for local development; it is not tracked here.
+frontend/
