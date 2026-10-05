@@ -15,6 +15,16 @@ def clean_value(val):
         return None
     return val
 
+def upsert(db, model, key_field, values):
+    """Insert a row, or update the existing one matched by its natural key."""
+    existing = db.query(model).filter(getattr(model, key_field) == values[key_field]).first()
+    if existing is None:
+        db.add(model(**values))
+    else:
+        for field, value in values.items():
+            setattr(existing, field, value)
+
+
 def seed_database():
     print("Step 1: Validating dataset...")
     is_valid = validate_dataset()
@@ -26,12 +36,13 @@ def seed_database():
     db = SessionLocal()
 
     try:
-        # Delete existing data in reverse FK order
+        # This script runs on every deploy (Render build command), so it must not
+        # break user data. `user_wallet.card_id` references `cards.card_id`, so
+        # Banks/Cards/Merchants are UPSERTED by their natural key instead of being
+        # deleted. Benefits and card-merchant links are not referenced by user
+        # tables, so they are safely wiped and re-inserted.
         db.query(CardMerchant).delete()
         db.query(CardBenefit).delete()
-        db.query(Card).delete()
-        db.query(Merchant).delete()
-        db.query(Bank).delete()
         db.commit()
 
         xl = pd.ExcelFile(DATASET_PATH)
@@ -41,14 +52,13 @@ def seed_database():
         banks_df = banks_df.where(pd.notnull(banks_df), None)
         bank_inserted_count = 0
         for _, row in banks_df.iterrows():
-            bank = Bank(
+            upsert(db, Bank, "bank_id", dict(
                 bank_id=clean_value(row['bank_id']),
                 name=clean_value(row['name']),
                 website=clean_value(row['website']),
                 logo_url=None,
                 status="active"
-            )
-            db.add(bank)
+            ))
             bank_inserted_count += 1
         db.commit()
 
@@ -57,7 +67,7 @@ def seed_database():
         cards_df = cards_df.where(pd.notnull(cards_df), None)
         card_inserted_count = 0
         for _, row in cards_df.iterrows():
-            card = Card(
+            upsert(db, Card, "card_id", dict(
                 card_id=clean_value(row['card_id']),
                 bank_id=clean_value(row['bank_id']),
                 name=clean_value(row['name']),
@@ -70,8 +80,7 @@ def seed_database():
                 annual_fee_waiver_condition=None,
                 application_url=None,
                 image_url=None
-            )
-            db.add(card)
+            ))
             card_inserted_count += 1
         db.commit()
 
@@ -105,7 +114,7 @@ def seed_database():
         merchants_df = merchants_df.where(pd.notnull(merchants_df), None)
         merchant_inserted_count = 0
         for _, row in merchants_df.iterrows():
-            merchant = Merchant(
+            upsert(db, Merchant, "merchant_id", dict(
                 merchant_id=clean_value(row['merchant_id']),
                 merchant_name=clean_value(row['merchant_name']),
                 normalized_name=clean_value(row['normalized_name']),
@@ -113,8 +122,7 @@ def seed_database():
                 logo_url=None,
                 website=None,
                 status="active"
-            )
-            db.add(merchant)
+            ))
             merchant_inserted_count += 1
         db.commit()
 
